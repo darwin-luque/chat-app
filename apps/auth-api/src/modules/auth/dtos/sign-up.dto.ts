@@ -1,25 +1,3 @@
-import { IsOptional, IsString, IsUrl, MinLength } from 'class-validator';
-import { IsPassword } from '@chat-app/nest-utils';
+import { CreateUserDto } from '../../users/dtos/create-user.dto';
 
-export class SignUpDto {
-  @IsString()
-  @MinLength(3)
-  username: string;
-
-  @IsPassword()
-  password: string;
-
-  @IsString()
-  @MinLength(3)
-  @IsOptional()
-  firstName?: string;
-
-  @IsString()
-  @MinLength(3)
-  @IsOptional()
-  lastName?: string;
-
-  @IsUrl()
-  @IsOptional()
-  picture?: string;
-}
+export class SignUpDto extends CreateUserDto {}
