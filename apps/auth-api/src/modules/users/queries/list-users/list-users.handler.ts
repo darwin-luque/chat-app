@@ -12,7 +12,6 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
   ) {}
 
   async execute(query: ListUsersQuery): Promise<[User[], number]> {
-    console.log(query);
     return this.usersRepository.findAndCount({
       where: { id: Not(query.userId) },
       skip: query.data.offset ?? DEFAULT_OFFSET,

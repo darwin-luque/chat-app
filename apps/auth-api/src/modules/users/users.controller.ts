@@ -26,7 +26,6 @@ export class UsersController {
     @Query() query: ListUsersDto,
     @TokenPayload() payload: ITokenPayload
   ): Promise<PaginationOutputDto<User>> {
-    console.log(query);
     const [users, total] = await this.queryBus.execute<
       ListUsersQuery,
       [User[], number]
