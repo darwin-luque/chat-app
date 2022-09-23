@@ -1,0 +1,5 @@
+{
+  "exportall.config.folderListener": [
+    "/apps/mobile/src/stacks/auth"
+  ]
+}
