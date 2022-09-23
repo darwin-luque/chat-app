@@ -15,6 +15,7 @@
     "react-native-screens": "*",
     "@react-navigation/native": "*",
     "@react-navigation/native-stack": "*",
-    "@reduxjs/toolkit": "*"
+    "@reduxjs/toolkit": "*",
+    "react-native-toast-message": "*"
   }
 }
