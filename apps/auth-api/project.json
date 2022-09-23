@@ -11,20 +11,14 @@
         "compiler": "tsc",
         "outputPath": "dist/apps/auth-api",
         "main": "apps/auth-api/src/main.ts",
-        "tsConfig": "apps/auth-api/tsconfig.app.json",
-        "assets": ["apps/auth-api/src/assets"]
+        "tsConfig": "apps/auth-api/tsconfig.app.json"
       },
       "configurations": {
         "production": {
           "optimization": true,
           "extractLicenses": true,
           "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/auth-api/src/environments/environment.ts",
-              "with": "apps/auth-api/src/environments/environment.prod.ts"
-            }
-          ]
+          "fileReplacements": []
         }
       }
     },
