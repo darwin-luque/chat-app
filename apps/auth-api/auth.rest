@@ -3,10 +3,10 @@ POST http://localhost:3001/api/auth/sign-up
 Content-Type: application/json
 
 {
-  "username": "bessy",
+  "username": "nicole",
   "password": "Password123*",
-  "firstName": "Bessy",
-  "lastName": "Alcerro"
+  "firstName": "Nubia",
+  "lastName": "Luque"
 }
 
 ### Sign in
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Token
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ZWVjYmVlZS02YjFiLTRmZTUtOWNkZi0xZjljMjViMTBiM2UiLCJ1c2VybmFtZSI6ImRhcndpbiIsImdpdmVuX25hbWUiOiJEYXJ3aW4iLCJmYW1pbHlfbmFtZSI6Ikx1cXVlIiwicGljdHVyZSI6bnVsbCwiaWF0IjoxNjYzOTEyMDMzLCJleHAiOjE2NjM5MTIxMTksImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSJ9.mSoQDYKm9lqiVBHDKWfBrMfmOO4bNW-_LE4PdtTSDLk
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ZWVjYmVlZS02YjFiLTRmZTUtOWNkZi0xZjljMjViMTBiM2UiLCJ1c2VybmFtZSI6ImRhcndpbiIsImdpdmVuX25hbWUiOiJEYXJ3aW4iLCJmYW1pbHlfbmFtZSI6Ikx1cXVlIiwicGljdHVyZSI6bnVsbCwiaWF0IjoxNjYzOTEyMjA0LCJleHAiOjE2NjM5OTg2MDQsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSJ9.pb77LLYwAMB_A10tjE-EmmCM8XKxwwPo2sDWVleyASs
 
 ### List Users
 GET http://localhost:3001/api/users

@@ -1,4 +1,9 @@
-import { PaginationOutputDto, Serialize } from '@chat-app/nest-utils';
+import {
+  PaginationOutputDto,
+  DEFAULT_OFFSET,
+  DEFAULT_LIMIT,
+  Serialize,
+} from '@chat-app/nest-utils';
 import { Controller, Get, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ITokenPayload } from '@chat-app/utils';
@@ -21,6 +26,7 @@ export class UsersController {
     @Query() query: ListUsersDto,
     @TokenPayload() payload: ITokenPayload
   ): Promise<PaginationOutputDto<User>> {
+    console.log(query);
     const [users, total] = await this.queryBus.execute<
       ListUsersQuery,
       [User[], number]
@@ -29,8 +35,8 @@ export class UsersController {
     return new PaginationOutputDto({
       items: users,
       total,
-      limit: query.limit,
-      offset: query.offset,
+      offset: query.offset ?? DEFAULT_OFFSET,
+      limit: query.limit ?? DEFAULT_LIMIT,
       next: null,
       prev: null,
     });

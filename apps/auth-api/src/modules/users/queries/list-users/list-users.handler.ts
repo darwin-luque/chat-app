@@ -1,3 +1,4 @@
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from '@chat-app/nest-utils';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
@@ -14,8 +15,8 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
     console.log(query);
     return this.usersRepository.findAndCount({
       where: { id: Not(query.userId) },
-      skip: query.data.offset,
-      take: query.data.limit,
+      skip: query.data.offset ?? DEFAULT_OFFSET,
+      take: query.data.limit ?? DEFAULT_LIMIT,
     });
   }
 }
