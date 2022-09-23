@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../../../infrastructure/entities/user.entity';
 import { SignUpCommand } from './sign-up.command';
+import { BadRequestException } from '@nestjs/common';
 
 export class SignUpHandler implements ICommandHandler<SignUpCommand> {
   constructor(
@@ -18,6 +19,16 @@ export class SignUpHandler implements ICommandHandler<SignUpCommand> {
   ) {}
 
   async execute(command: SignUpCommand): Promise<Session> {
+    const foundUser = await this.usersRepository.findOne({
+      where: { username: command.data.username },
+    });
+
+    if (foundUser) {
+      throw new BadRequestException(
+        `User with username ${command.data.username} already exists`
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(command.data.password, 10);
 
     const user = await this.usersRepository.save(
