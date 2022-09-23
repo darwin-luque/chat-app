@@ -4,7 +4,7 @@ import {
   DEFAULT_LIMIT,
   Serialize,
 } from '@chat-app/nest-utils';
-import { Body, Controller, Get, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ITokenPayload } from '@chat-app/utils';
 import { TokenPayload } from '../../infrastructure/decorators/token-payload.decorator';
@@ -14,6 +14,7 @@ import { User } from '../../infrastructure/entities/user.entity';
 import { UserDto } from './dtos/user.dto';
 import { UpdateUserCommand } from './commands/update-user';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { DeleteUserCommand } from './commands/delete-user';
 
 @Controller('users')
 export class UsersController {
@@ -50,5 +51,11 @@ export class UsersController {
     @TokenPayload() payload: ITokenPayload
   ): Promise<User> {
     return this.commandBus.execute(new UpdateUserCommand(payload.sub, body));
+  }
+
+  @Delete()
+  @Serialize(UserDto)
+  delete(@TokenPayload() payload: ITokenPayload): Promise<User> {
+    return this.commandBus.execute(new DeleteUserCommand(payload.sub));
   }
 }
