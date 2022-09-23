@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message'
 import React, { FC, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -8,22 +9,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { REGISTER_SCREEN } from '../../../../../constants/definitions';
+import { LOGIN_SCREEN } from '../../../../../constants/definitions';
 import { theme } from '../../../../../constants/styles/themes';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
 
-export const LoginForm: FC = () => {
+export const RegisterForm: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigator = useNavigation();
 
-  const onRegister = () => {
-    navigator.navigate(REGISTER_SCREEN);
+  const onLogin = () => {
+    navigator.navigate(LOGIN_SCREEN);
   };
 
-  const onLogin = () => {
+  const onRegister = () => {
+    console.log({ username, password, confirmPassword });
+    if (password !== confirmPassword) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Passwords do not match',
+      });
+      return;
+    }
     // TODO: Implement redux
-    console.log({ username, password });
     setUsername('');
     setPassword('');
   };
@@ -32,7 +42,7 @@ export const LoginForm: FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TerminalIcon width="40" height="40" fill={theme.colors.text} />
-        <Text style={styles.title}>Chat App</Text>
+        <Text style={styles.title}>Registration</Text>
       </View>
       <View style={styles.form}>
         <View style={styles.field}>
@@ -61,15 +71,29 @@ export const LoginForm: FC = () => {
             />
           </KeyboardAvoidingView>
         </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Confirm Password</Text>
+          <KeyboardAvoidingView>
+            <TextInput
+              style={styles.input}
+              placeholder="************"
+              secureTextEntry
+              placeholderTextColor={theme.colors.grays[400]}
+              passwordRules="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+          </KeyboardAvoidingView>
+        </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={onLogin}>
-            <Text style={styles.buttonLabel}>Login</Text>
+          <TouchableOpacity style={styles.button} onPress={onRegister}>
+            <Text style={styles.buttonLabel}>Register</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.register}>
-          <Text style={styles.message}>Don't have an account? </Text>
-          <TouchableOpacity onPress={onRegister} style={styles.link}>
-            <Text style={styles.strong}>Register here</Text>
+          <Text style={styles.message}>Already have an account? </Text>
+          <TouchableOpacity onPress={onLogin} style={styles.link}>
+            <Text style={styles.strong}>Login here</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -5,7 +5,6 @@ import { LoginForm } from '../../components/auth/login/form';
 import { DismissKeyboardView } from '../../components/hoc/dismiss-keyboard-view';
 
 export const LoginScreen: FC = () => {
-  console.log('LoginScreen');
   return (
     <DismissKeyboardView style={styles.container}>
       <LoginForm />
