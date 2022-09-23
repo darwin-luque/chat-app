@@ -4,7 +4,7 @@ import {
   mapUserToTokenUserMetadata,
 } from '@chat-app/utils';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -12,6 +12,7 @@ import { User } from '../../../../infrastructure/entities/user.entity';
 import { SignUpCommand } from './sign-up.command';
 import { BadRequestException } from '@nestjs/common';
 
+@CommandHandler(SignUpCommand)
 export class SignUpHandler implements ICommandHandler<SignUpCommand> {
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,

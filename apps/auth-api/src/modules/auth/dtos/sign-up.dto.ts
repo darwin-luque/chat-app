@@ -1,4 +1,4 @@
-import { IsString, MinLength } from 'class-validator';
+import { IsOptional, IsString, IsUrl, MinLength } from 'class-validator';
 import { IsPassword } from '@chat-app/nest-utils';
 
 export class SignUpDto {
@@ -11,9 +11,15 @@ export class SignUpDto {
 
   @IsString()
   @MinLength(3)
-  firstName: string;
+  @IsOptional()
+  firstName?: string;
 
   @IsString()
   @MinLength(3)
-  lastName: string;
+  @IsOptional()
+  lastName?: string;
+
+  @IsUrl()
+  @IsOptional()
+  picture?: string;
 }

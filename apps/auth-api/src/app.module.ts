@@ -5,12 +5,22 @@ import { SetTokenPayloadMiddleware } from './infrastructure/middlewares/set-toke
 import { AuthModule } from './modules/auth/auth.module';
 import { ormconfig } from './config/typeorm/ormconfig';
 import { jwtconfig } from './config/jwt/jwt.config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './infrastructure/guards/auth.guard';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 
 @Module({
   imports: [
     AuthModule,
     JwtModule.register(jwtconfig),
     TypeOrmModule.forRoot(ormconfig),
+  ],
+  providers: [
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {
