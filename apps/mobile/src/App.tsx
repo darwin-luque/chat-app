@@ -7,7 +7,7 @@ import { store } from './store';
 export const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <Router />
     </Provider>
   );

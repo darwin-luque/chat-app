@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { REGISTER_SCREEN } from '../../../../../constants/definitions';
 import { theme } from '../../../../../constants/styles/themes';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
 
@@ -17,8 +18,7 @@ export const LoginForm: FC = () => {
   const navigator = useNavigation();
 
   const onRegister = () => {
-    // TODO: Replace for correct parameter
-    navigator.navigate('Register' as never);
+    navigator.navigate(REGISTER_SCREEN);
   };
 
   const onLogin = () => {
