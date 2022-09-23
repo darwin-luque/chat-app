@@ -1,8 +1,7 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
-import { SetTokenPayloadMiddleware } from './infrastructure/middlewares/set-token-payload.middleware';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 import { JwtAuthGuard } from './infrastructure/guards/auth.guard';
 import { UsersModule } from './modules/users/users.module';
@@ -25,8 +24,4 @@ import { jwtconfig } from './config/jwt/jwt.config';
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(SetTokenPayloadMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}

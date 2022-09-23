@@ -13,7 +13,7 @@ export class SerializeInterceptor<D, T extends ClassConstructor<D>>
     return handler.handle().pipe(
       map((data: unknown) => {
         if (data instanceof PaginationOutputDto) {
-          data._items = plainToInstance(this.dto, data._items, {
+          data.items = plainToInstance(this.dto, data.items, {
             excludeExtraneousValues: true,
           });
 

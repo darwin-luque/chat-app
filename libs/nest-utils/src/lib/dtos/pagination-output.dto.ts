@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+interface IPage {
+  offset: number;
+  limit: number;
+}
+
 export class PaginationOutputDto<T> {
-  _items: T[];
+  items: T[];
   @ApiProperty({ type: Number, description: 'Total number of items' })
   total: number;
   @ApiProperty({ type: Number, description: 'Start index' })
@@ -15,15 +20,15 @@ export class PaginationOutputDto<T> {
     type: Object,
     description: 'Next page metadata',
   })
-  next: { offset: number; limit: number } | null;
+  next: IPage | null;
   @ApiProperty({
     type: Object,
     description: 'Previous page metadata',
   })
-  previous: { offset: number; limit: number } | null;
+  prev: IPage | null;
 
   constructor(data: PaginationOutputDto<T>) {
-    this._items = data._items;
+    this.items = data.items;
     this.total = data.total;
     this.offset = data.offset;
     this.limit = data.limit;
@@ -35,7 +40,7 @@ export class PaginationOutputDto<T> {
           }
         : null;
 
-    this.previous =
+    this.prev =
       data.offset > 0
         ? {
             offset: data.offset - data.limit > 0 ? data.offset - data.limit : 0,
