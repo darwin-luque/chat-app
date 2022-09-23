@@ -1,9 +1,10 @@
-import { IsEmail } from 'class-validator';
-import { IsPassword } from '@restaurant-app/nest-utils';
+import { IsPassword } from '@chat-app/nest-utils';
+import { IsString, MinLength } from 'class-validator';
 
 export class SignInDto {
-  @IsEmail()
-  email: string;
+  @IsString()
+  @MinLength(3)
+  username: string;
 
   @IsPassword()
   password: string;

@@ -1,4 +1,3 @@
-import { UserRole, UserStatus } from '@restaurant-app/utils';
 import { Expose } from 'class-transformer';
 
 export class UserDto {
@@ -6,7 +5,7 @@ export class UserDto {
   id: string;
 
   @Expose()
-  email: string;
+  username: string;
 
   @Expose()
   firstName: string;
@@ -15,10 +14,7 @@ export class UserDto {
   lastName: string;
 
   @Expose()
-  role: UserRole;
-
-  @Expose()
-  status: UserStatus;
+  picture: string;
 
   @Expose()
   createdAt: Date;

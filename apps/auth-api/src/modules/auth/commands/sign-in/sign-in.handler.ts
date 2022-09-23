@@ -1,14 +1,14 @@
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import {
-  mapUserToTokenUserMetadata,
   Session,
   ITokenPayload,
+  mapUserToTokenUserMetadata,
 } from '@chat-app/utils';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { User } from '../../../../infrastructure/entities/user.entity';
 import { SignInCommand } from './sign-in.command';
 
@@ -21,12 +21,12 @@ export class SignInHandler implements ICommandHandler<SignInCommand> {
 
   async execute(command: SignInCommand): Promise<Session> {
     const user = await this.usersRepository.findOneBy({
-      email: command.data.email,
+      username: command.data.username,
     });
 
     if (!user) {
       throw new NotFoundException(
-        `User with email ${command.data.email} not found`
+        `User with username ${command.data.username} not found`
       );
     }
 

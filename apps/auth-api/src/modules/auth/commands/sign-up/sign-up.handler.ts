@@ -1,8 +1,8 @@
 import {
-  mapUserToTokenUserMetadata,
-  ITokenPayload,
   Session,
-} from '@restaurant-app/utils';
+  ITokenPayload,
+  mapUserToTokenUserMetadata,
+} from '@chat-app/utils';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ICommandHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';

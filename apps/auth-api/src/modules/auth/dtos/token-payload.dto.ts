@@ -1,4 +1,4 @@
-import { ITokenPayload, UserRole } from '@restaurant-app/utils';
+import { ITokenPayload } from '@chat-app/utils';
 import { Expose } from 'class-transformer';
 
 export class TokenPayloadDto implements ITokenPayload {
@@ -18,10 +18,10 @@ export class TokenPayloadDto implements ITokenPayload {
   sub: string;
 
   @Expose()
-  email: string;
+  username: string;
 
   @Expose()
-  role: UserRole;
+  picture?: string;
 
   @Expose()
   given_name: string;
