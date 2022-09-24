@@ -22,6 +22,7 @@
     "@react-native-community/async-storage": "*",
     "react-native-paper": "*",
     "@react-navigation/material-bottom-tabs": "*",
-    "react-native-vector-icons": "*"
+    "react-native-vector-icons": "*",
+    "@react-navigation/bottom-tabs": "*"
   }
 }

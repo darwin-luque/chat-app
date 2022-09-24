@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { CHAT_STACK, theme } from '../../constants';
 import { ChatStack } from '../chat';
 import { StyleSheet } from 'react-native';
@@ -10,27 +10,34 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.tab.background,
     borderTopColor: theme.colors.tab.line,
     borderTopWidth: 1,
+    height: 80,
   },
 });
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 export const MainStack: FC = () => {
   return (
     <Tab.Navigator
       initialRouteName={CHAT_STACK}
-      activeColor={theme.colors.tab.active}
-      inactiveColor={theme.colors.tab.inactive}
-      barStyle={styles.bar}
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: styles.bar,
+        tabBarActiveTintColor: theme.colors.tab.active,
+        tabBarInactiveTintColor: theme.colors.tab.inactive,
+      }}
     >
       <Tab.Screen
         name={CHAT_STACK}
         component={ChatStack}
         options={{
-          tabBarLabel: 'Chat',
-          tabBarIcon: ({ color }) => (
-            <Icon color={color} name="message-processing-outline" size={24} />
-          ),
+          tabBarIcon({ color }) {
+            return <Icon color={color} size={26} name="message1" />;
+          },
+          tabBarLabel() {
+            return null;
+          },
+          tabBarAccessibilityLabel: 'Chat',
         }}
       />
     </Tab.Navigator>
