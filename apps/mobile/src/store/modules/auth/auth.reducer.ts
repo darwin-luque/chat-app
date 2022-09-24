@@ -1,5 +1,5 @@
 import { Reducer } from '@reduxjs/toolkit';
-import { ActionTypes } from '../../constants/action-types.enum';
+import { ActionTypes } from '../../../constants';
 import { AuthAction, AuthState } from './auth.types';
 
 const initialState: AuthState = {

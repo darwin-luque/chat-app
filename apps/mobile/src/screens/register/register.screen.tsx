@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
-import { theme } from '../../../constants/styles/themes';
+import { theme } from '../../constants';
 import { RegisterForm } from '../../components/auth/register/form';
 import { DismissKeyboardView } from '../../components/hoc/dismiss-keyboard-view';
 

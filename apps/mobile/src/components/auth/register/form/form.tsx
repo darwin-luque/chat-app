@@ -9,8 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { LOGIN_SCREEN } from '../../../../../constants/definitions';
-import { theme } from '../../../../../constants/styles/themes';
+import { LOGIN_SCREEN, theme } from '../../../../constants';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
 import { registerAction } from '../../../../store/modules';
 import { useAppDispatch } from '../../../../hooks/redux.hook';

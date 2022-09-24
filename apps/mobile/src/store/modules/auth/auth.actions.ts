@@ -2,19 +2,37 @@ import { ThunkAction } from '@reduxjs/toolkit';
 import { Session } from '@chat-app/utils';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AxiosError } from 'axios';
-import { ActionTypes } from '../../constants/action-types.enum';
 import { RootState } from '../../index';
 import { AuthAction } from './auth.types';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { IUserInput } from '../../../types';
 import { AuthService } from '../../../services/auth.service';
-import { StorageKeys } from '../../../constants';
+import { StorageKeys, ActionTypes } from '../../../constants';
 import { logger } from '../../../../utils';
 
+type Action = ThunkAction<void, RootState, unknown, AuthAction>;
+
+export const checkForSession = Object.assign(
+  (): Action => async (dispatch) => {
+    try {
+      const sessionStr = await AsyncStorage.getItem(StorageKeys.Session);
+      const session = sessionStr ? (JSON.parse(sessionStr) as Session) : null;
+      if (session) {
+        dispatch(checkForSession.success(session));
+      }
+    } catch (error) {
+      logger(error);
+    }
+  },
+  {
+    success: (session: Session): AuthAction => ({
+      type: ActionTypes.CHECK_SESSION,
+      session,
+    }),
+  }
+);
 export const registerAction = Object.assign(
-  (
-    data: IUserInput
-  ): ThunkAction<void, RootState, unknown, AuthAction> => async (dispatch) => {
+  (data: IUserInput): Action => async (dispatch) => {
     dispatch(registerAction.start());
     try {
       const session = await AuthService.register(data);

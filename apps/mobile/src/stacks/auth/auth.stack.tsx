@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '../../screens/login';
-import { LOGIN_SCREEN, REGISTER_SCREEN } from '../../../constants/definitions';
+import { LOGIN_SCREEN, REGISTER_SCREEN } from '../../constants';
 import { RegisterScreen } from '../../screens/register';
+import { LoginScreen } from '../../screens/login';
 
 const Stack = createNativeStackNavigator();
 

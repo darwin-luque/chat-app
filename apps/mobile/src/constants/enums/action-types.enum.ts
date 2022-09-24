@@ -1,5 +1,6 @@
 export enum ActionTypes {
   // AuthActions
+  CHECK_SESSION = 'CHECK_SESSION',
   LOGIN_START = 'LOGIN_START',
   LOGIN_SUCCESS = 'LOGIN_SUCCESS',
   LOGIN_FAIL = 'LOGIN_FAIL',

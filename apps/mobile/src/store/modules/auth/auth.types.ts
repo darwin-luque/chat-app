@@ -1,5 +1,5 @@
 import { Session } from '@chat-app/utils';
-import { ActionTypes } from '../../constants/action-types.enum';
+import { ActionTypes } from '../../../constants';
 
 export interface AuthState {
   session: Session | null;

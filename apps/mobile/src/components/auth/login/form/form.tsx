@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { REGISTER_SCREEN } from '../../../../../constants/definitions';
-import { theme } from '../../../../../constants/styles/themes';
+import { REGISTER_SCREEN, theme } from '../../../../constants';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
 
 export const LoginForm: FC = () => {
