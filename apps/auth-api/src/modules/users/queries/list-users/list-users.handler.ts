@@ -10,7 +10,7 @@ import {
   EntityPropertyNotFoundError,
   FindOptionsWhere,
   Repository,
-  Like,
+  ILike,
   Not,
 } from 'typeorm';
 import { User } from '../../../../infrastructure/entities/user.entity';
@@ -23,7 +23,6 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
   ) {}
 
   async execute(query: ListUsersQuery): Promise<[User[], number]> {
-    console.log({ [query.data.field]: query.data.order });
     try {
       return this.usersRepository.findAndCount({
         where: { id: Not(query.userId), ...this.getWhere(query.data.q) },
@@ -43,6 +42,6 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
   }
 
   private getWhere(q: string): FindOptionsWhere<User> {
-    return q ? { username: Like(`%${q}%`) } : {};
+    return q ? { username: ILike(`%${q}%`) } : {};
   }
 }
