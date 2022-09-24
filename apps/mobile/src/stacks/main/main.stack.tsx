@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/AntDesign';
-import { CHAT_STACK, theme } from '../../constants';
-import { ChatStack } from '../chat';
 import { StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { CHAT_STACK, SETTINGS_STACK, theme } from '../../constants';
+import { SettingsStack } from '../settings';
+import { ChatStack } from '../chat';
 
 const styles = StyleSheet.create({
   bar: {
@@ -38,6 +39,19 @@ export const MainStack: FC = () => {
             return null;
           },
           tabBarAccessibilityLabel: 'Chat',
+        }}
+      />
+      <Tab.Screen
+        name={SETTINGS_STACK}
+        component={SettingsStack}
+        options={{
+          tabBarIcon({ color }) {
+            return <Icon color={color} size={28} name="setting" />;
+          },
+          tabBarLabel() {
+            return null;
+          },
+          tabBarAccessibilityLabel: 'Settings',
         }}
       />
     </Tab.Navigator>
