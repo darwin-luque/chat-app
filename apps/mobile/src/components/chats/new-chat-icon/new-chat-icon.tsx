@@ -7,7 +7,7 @@ export interface NewChatProps {
   onNewChat: () => void;
 }
 
-export const NewChat: FC<NewChatProps> = ({ onNewChat }) => {
+export const NewChatIcon: FC<NewChatProps> = ({ onNewChat }) => {
   return (
     <TouchableOpacity onPress={onNewChat}>
       <Icon name="new-message" color={theme.colors.success} size={20} />

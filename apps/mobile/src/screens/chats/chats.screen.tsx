@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useLayoutEffect } from 'react';
 import { Text } from 'react-native';
-import { NewChat } from '../../components/chats/new-chat/new-chat';
+import { NewChatIcon } from '../../components/chats/new-chat-icon';
 import { Layout } from '../../components/ui/layout';
 
 export const ChatsScreen: FC = () => {
@@ -15,7 +15,7 @@ export const ChatsScreen: FC = () => {
     navigator.setOptions({
       headerMode: 'screen',
       gestureEnabled: true,
-      headerRight: () => <NewChat onNewChat={onCreateChat} />
+      headerRight: () => <NewChatIcon onNewChat={onCreateChat} />,
     });
   }, [navigator]);
 
