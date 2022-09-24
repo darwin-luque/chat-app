@@ -12,13 +12,13 @@ import { logger } from '../../../../utils';
 
 type Action = ThunkAction<void, RootState, unknown, AuthAction>;
 
-export const checkForSession = Object.assign(
+export const checkForSessionAction = Object.assign(
   (): Action => async (dispatch) => {
     try {
       const sessionStr = await AsyncStorage.getItem(StorageKeys.Session);
       const session = sessionStr ? (JSON.parse(sessionStr) as Session) : null;
       if (session) {
-        dispatch(checkForSession.success(session));
+        dispatch(checkForSessionAction.success(session));
       }
     } catch (error) {
       logger(error);

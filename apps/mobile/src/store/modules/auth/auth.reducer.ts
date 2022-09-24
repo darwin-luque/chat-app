@@ -17,6 +17,7 @@ export const authReducer: Reducer<AuthState, AuthAction> = (
       return Object.assign(state, {
         loading: true,
       });
+    case ActionTypes.CHECK_SESSION:
     case ActionTypes.LOGIN_SUCCESS:
       return Object.assign(state, {
         loading: false,
