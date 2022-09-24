@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ChatsScreen } from '../../screens/chats';
-import { CHATS_SCREEN, theme } from '../../constants';
 import { StyleSheet } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { CHATS_SCREEN, NEW_CHAT_SCREEN, theme } from '../../constants';
+import { NewChatScreen } from '../../screens/new-chat';
+import { ChatsScreen } from '../../screens/chats';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,16 @@ export const ChatStack: FC = () => {
           headerStyle: styles.header,
           headerTitleStyle: styles.title,
           title: 'Chats',
+        }}
+      />
+      <Stack.Screen
+        name={NEW_CHAT_SCREEN}
+        component={NewChatScreen}
+        options={{
+          headerShown: true,
+          headerStyle: styles.header,
+          headerTitleStyle: styles.title,
+          title: 'New Chat',
         }}
       />
     </Stack.Navigator>
