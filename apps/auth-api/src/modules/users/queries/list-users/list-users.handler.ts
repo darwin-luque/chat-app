@@ -6,7 +6,13 @@ import {
 import { BadRequestException } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityPropertyNotFoundError, Not, Repository } from 'typeorm';
+import {
+  EntityPropertyNotFoundError,
+  FindOptionsWhere,
+  Repository,
+  Like,
+  Not,
+} from 'typeorm';
 import { User } from '../../../../infrastructure/entities/user.entity';
 import { ListUsersQuery } from './list-users.query';
 
@@ -20,7 +26,7 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
     console.log({ [query.data.field]: query.data.order });
     try {
       return this.usersRepository.findAndCount({
-        where: { id: Not(query.userId) },
+        where: { id: Not(query.userId), ...this.getWhere(query.data.q) },
         order: {
           [query.data.field ?? 'username']: query.data.order ?? DEFAULT_ORDER,
         },
@@ -34,5 +40,9 @@ export class ListUsersHandler implements IQueryHandler<ListUsersQuery> {
       }
       throw error;
     }
+  }
+
+  private getWhere(q: string): FindOptionsWhere<User> {
+    return q ? { username: Like(`%${q}%`) } : {};
   }
 }

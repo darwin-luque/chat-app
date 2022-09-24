@@ -10,4 +10,8 @@ export class ListUsersDto extends PaginationInputDto {
   @IsOptional()
   @IsString()
   field: string;
+
+  @IsOptional()
+  @IsString()
+  q: string;
 }
