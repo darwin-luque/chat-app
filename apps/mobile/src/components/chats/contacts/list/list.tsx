@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { IPage, IUser } from '@chat-app/utils';
 import { FlatList, StyleSheet, Dimensions } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook';
-import { listContactsAction } from '../../../store/modules';
-import { ContactElement } from './contact-element';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
+import { listContactsAction } from '../../../../store/modules';
+import { ContactElement } from './element';
 
 export const ContactsList: FC = () => {
   const { contacts, loading, next } = useAppSelector((state) => state.contacts);
