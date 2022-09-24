@@ -18,5 +18,11 @@ export const darkTheme: ITheme = {
         text: '#16162C',
       },
     },
+    tab: {
+      background: '#16162C',
+      inactive: '#F6F6F6',
+      line: '#0f0f22',
+      active: '#4e0eff',
+    }
   },
 };

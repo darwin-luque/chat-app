@@ -1,18 +1,38 @@
 import React, { FC } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { CHAT_STACK } from '../../constants';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CHAT_STACK, theme } from '../../constants';
 import { ChatStack } from '../chat';
+import { StyleSheet } from 'react-native';
 
-const Stack = createNativeStackNavigator();
+const styles = StyleSheet.create({
+  bar: {
+    backgroundColor: theme.colors.tab.background,
+    borderTopColor: theme.colors.tab.line,
+    borderTopWidth: 1,
+  },
+});
+
+const Tab = createMaterialBottomTabNavigator();
 
 export const MainStack: FC = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <Tab.Navigator
+      initialRouteName={CHAT_STACK}
+      activeColor={theme.colors.tab.active}
+      inactiveColor={theme.colors.tab.inactive}
+      barStyle={styles.bar}
+    >
+      <Tab.Screen
         name={CHAT_STACK}
         component={ChatStack}
-        options={{ headerShown: false }}
+        options={{
+          tabBarLabel: 'Chat',
+          tabBarIcon: ({ color }) => (
+            <Icon color={color} name="message-processing-outline" size={24} />
+          ),
+        }}
       />
-    </Stack.Navigator>
+    </Tab.Navigator>
   );
 };

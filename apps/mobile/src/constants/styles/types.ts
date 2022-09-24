@@ -4,6 +4,12 @@ export interface ITheme {
     text: string;
     inputBorder: string;
     link: string;
+    tab: {
+      background: string;
+      inactive: string;
+      line: string;
+      active: string;
+    }
     grays: {
       100: string;
       200: string;
