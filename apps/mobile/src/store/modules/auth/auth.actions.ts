@@ -8,7 +8,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { IUserInput } from '../../../types';
 import { AuthService } from '../../../services/auth.service';
 import { StorageKeys, ActionTypes } from '../../../constants';
-import { logger } from '../../../../utils';
+import { logger } from '../../../utils';
 
 type Action = ThunkAction<void, RootState, unknown, AuthAction>;
 
