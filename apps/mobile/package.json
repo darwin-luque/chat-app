@@ -19,6 +19,9 @@
     "react-native-toast-message": "*",
     "axios": "*",
     "mongoose": "*",
-    "@react-native-community/async-storage": "*"
+    "@react-native-community/async-storage": "*",
+    "react-native-paper": "*",
+    "@react-navigation/material-bottom-tabs": "*",
+    "react-native-vector-icons": "*"
   }
 }
