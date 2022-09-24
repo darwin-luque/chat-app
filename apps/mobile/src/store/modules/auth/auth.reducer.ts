@@ -14,20 +14,23 @@ export const authReducer: Reducer<AuthState, AuthAction> = (
 ) => {
   switch (action.type) {
     case ActionTypes.LOGIN_START:
-      return Object.assign(state, {
+      return {
+        ...state,
         loading: true,
-      });
+      };
     case ActionTypes.CHECK_SESSION:
     case ActionTypes.LOGIN_SUCCESS:
-      return Object.assign(state, {
+      return {
+        ...state,
         loading: false,
         session: action.session ?? null,
-      });
+      };
     case ActionTypes.LOGIN_FAIL:
-      return Object.assign(state, {
+      return {
+        ...state,
         loading: false,
         error: action.error ?? null,
-      });
+      };
     default:
       return state;
   }

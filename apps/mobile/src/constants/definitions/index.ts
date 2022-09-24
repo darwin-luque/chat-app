@@ -1,2 +1,2 @@
 export * from './screens';
-export * from './stacks.definitions';
+export * from './stacks';
