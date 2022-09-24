@@ -25,6 +25,10 @@ export interface ITheme {
         background: string;
         text: string;
       };
+      logout: {
+        background: string;
+        text: string;
+      }
     };
     white: string;
     black: string;

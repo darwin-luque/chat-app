@@ -21,6 +21,10 @@ export const darkTheme: ITheme = {
         background: '#F6F6F6',
         text: '#16162C',
       },
+      logout: {
+        background: '#F44336',
+        text: '#FFCDD2',
+      },
     },
     tab: {
       background: '#16162C',

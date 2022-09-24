@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ProfileOverview } from '../../components/settings/profile/overview';
+import { ProfileLogout } from '../../components/settings/profile/logout';
 import { Layout } from '../../components/ui/layout';
 
 export const SettingsScreen: FC = () => {
@@ -8,11 +9,16 @@ export const SettingsScreen: FC = () => {
     console.log('edit');
   };
 
+  const onLogout = () => {
+    console.log('logout');
+  };
+
   return (
     <Layout>
       <View style={styles.container}>
         <ProfileOverview onEdit={onEdit} />
-        <Text>Settings</Text>
+        <View style={styles.spacer} />
+        <ProfileLogout onLogout={onLogout} />
       </View>
     </Layout>
   );
@@ -26,5 +32,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 10,
+  },
+  spacer: {
+    flex: 1,
   },
 });
