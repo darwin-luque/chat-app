@@ -4,6 +4,9 @@ import { FlatList, StyleSheet, Dimensions } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
 import { listContactsAction } from '../../../../store/modules';
 import { ContactElement } from './element';
+import { ContactsListFilter } from '../../../ui/filter';
+
+const firstPage = { offset: 0, limit: 20 };
 
 export const ContactsList: FC = () => {
   const { contacts, loading, next } = useAppSelector((state) => state.contacts);
@@ -11,12 +14,19 @@ export const ContactsList: FC = () => {
   const dispatch = useAppDispatch();
 
   const loadContacts = useCallback(
-    (page: IPage = { offset: 0, limit: 20 }) => {
+    (page: IPage = firstPage) => {
       if (!contacts) {
-        dispatch(listContactsAction(page));
+        dispatch(listContactsAction(page, '', true));
       }
     },
     [contacts, dispatch]
+  );
+
+  const applyFilter = useCallback(
+    (filter: string) => {
+      dispatch(listContactsAction(firstPage, filter, true));
+    },
+    [dispatch]
   );
 
   useEffect(() => {
@@ -30,6 +40,8 @@ export const ContactsList: FC = () => {
   return (
     <FlatList
       contentContainerStyle={styles.container}
+      ListHeaderComponent={<ContactsListFilter onFilter={applyFilter} />}
+      ListHeaderComponentStyle={styles.header}
       refreshing={loading}
       onRefresh={loadContacts}
       data={contacts}
@@ -49,5 +61,9 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     width: Dimensions.get('screen').width,
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

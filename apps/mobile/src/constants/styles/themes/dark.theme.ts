@@ -12,6 +12,9 @@ export const darkTheme: ITheme = {
       200: '#EAEAEA',
       300: '#D8D8D8',
       400: '#C4C4C4',
+      500: '#A0A0A0',
+      600: '#7A7A7A',
+      700: '#454545',
     },
     buttons: {
       fill: {
