@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    marginHorizontal: 15,
   },
   notLast: {
     borderColor: theme.colors.grays[400],

@@ -48,6 +48,6 @@ export const ContactsList: FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
-    width: Dimensions.get('screen').width * 0.9,
+    width: Dimensions.get('screen').width,
   },
 });

@@ -7,6 +7,7 @@ import { IPage } from '../../../types/api';
 import { RootState } from '../../index';
 import { ContactsAction } from './contacts.types';
 import { ContactsService } from '../../../services/contacts.service';
+import { logger } from '../../../utils';
 
 type Action = ThunkAction<void, RootState, unknown, ContactsAction>;
 
@@ -24,6 +25,7 @@ export const listContactsAction = Object.assign(
 
       dispatch(listContactsAction.success(data.items, data.next));
     } catch (err) {
+      logger(err);
       const message = (err as AxiosError).message;
       Toast.show({
         type: 'error',

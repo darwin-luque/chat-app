@@ -23,3 +23,8 @@ export interface IPaginationOutput<T> {
   next: IPage | null;
   prev: IPage | null;
 }
+
+export enum ESortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
