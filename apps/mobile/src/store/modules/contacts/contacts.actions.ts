@@ -1,9 +1,8 @@
 import { ThunkAction } from '@reduxjs/toolkit';
 import Toast from 'react-native-toast-message';
-import { IUser } from '@chat-app/utils';
+import { IUser, IPage } from '@chat-app/utils';
 import { AxiosError } from 'axios';
 import { ActionTypes } from '../../../constants';
-import { IPage } from '../../../types/api';
 import { RootState } from '../../index';
 import { ContactsAction } from './contacts.types';
 import { ContactsService } from '../../../services/contacts.service';

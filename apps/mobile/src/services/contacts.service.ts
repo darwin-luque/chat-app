@@ -1,7 +1,6 @@
 import { IUser } from '@chat-app/utils';
-import { IPaginationOutput } from '@chat-app/utils';
+import { IPaginationOutput, IPage } from '@chat-app/utils';
 import axios, { AxiosResponse } from 'axios';
-import { IPage } from '../types/api';
 
 export class ContactsService {
   static async list(

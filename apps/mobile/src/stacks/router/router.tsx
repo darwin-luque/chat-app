@@ -17,8 +17,6 @@ export const Router: FC = () => {
     dispatch(checkForSessionAction());
   }, [dispatch]);
 
-  console.log(session);
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

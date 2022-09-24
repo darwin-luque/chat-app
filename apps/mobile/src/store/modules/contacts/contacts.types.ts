@@ -1,6 +1,5 @@
-import { IUser } from '@chat-app/utils';
+import { IUser, IPage } from '@chat-app/utils';
 import { ActionTypes } from '../../../constants';
-import { IPage } from '../../../types/api';
 
 export interface ContactsState {
   contacts: IUser[] | null;

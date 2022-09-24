@@ -1,11 +1,11 @@
 import { Reducer } from '@reduxjs/toolkit';
-import { ActionTypes } from '../../../constants';
-import { appendArrayWithNewOnly } from '../../../utils';
 import { ContactsAction, ContactsState } from './contacts.types';
+import { ActionTypes, firstPage } from '../../../constants';
+import { appendArrayWithNewOnly } from '../../../utils';
 
 const initalState: ContactsState = {
   contacts: null,
-  next: { offset: 0, limit: 20 },
+  next: firstPage,
   loading: false,
   error: null,
 };
