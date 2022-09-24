@@ -16,6 +16,9 @@
     "@react-navigation/native": "*",
     "@react-navigation/native-stack": "*",
     "@reduxjs/toolkit": "*",
-    "react-native-toast-message": "*"
+    "react-native-toast-message": "*",
+    "axios": "*",
+    "mongoose": "*",
+    "@react-native-community/async-storage": "*"
   }
 }

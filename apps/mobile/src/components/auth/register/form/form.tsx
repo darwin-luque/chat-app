@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-toast-message'
+import Toast from 'react-native-toast-message';
 import React, { FC, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -12,19 +12,32 @@ import {
 import { LOGIN_SCREEN } from '../../../../../constants/definitions';
 import { theme } from '../../../../../constants/styles/themes';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
+import { registerAction } from '../../../../store/modules';
+import { useAppDispatch } from '../../../../hooks/redux.hook';
 
 export const RegisterForm: FC = () => {
   const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigator = useNavigation();
+  const dispatch = useAppDispatch();
 
   const onLogin = () => {
     navigator.navigate(LOGIN_SCREEN);
   };
 
   const onRegister = () => {
-    console.log({ username, password, confirmPassword });
+    if (!username || !password) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please fill all required fields',
+      });
+      return;
+    }
+
     if (password !== confirmPassword) {
       Toast.show({
         type: 'error',
@@ -33,9 +46,19 @@ export const RegisterForm: FC = () => {
       });
       return;
     }
-    // TODO: Implement redux
+    dispatch(
+      registerAction({
+        username,
+        firstName,
+        lastName,
+        password,
+      })
+    );
     setUsername('');
     setPassword('');
+    setFirstName('');
+    setLastName('');
+    setConfirmPassword('');
   };
 
   return (
@@ -46,7 +69,7 @@ export const RegisterForm: FC = () => {
       </View>
       <View style={styles.form}>
         <View style={styles.field}>
-          <Text style={styles.label}>Username</Text>
+          <Text style={styles.label}>Username *</Text>
           <KeyboardAvoidingView>
             <TextInput
               style={styles.input}
@@ -58,7 +81,31 @@ export const RegisterForm: FC = () => {
           </KeyboardAvoidingView>
         </View>
         <View style={styles.field}>
-          <Text style={styles.label}>Password</Text>
+          <Text style={styles.label}>First Name</Text>
+          <KeyboardAvoidingView>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your First Name"
+              placeholderTextColor={theme.colors.grays[400]}
+              value={firstName}
+              onChangeText={setFirstName}
+            />
+          </KeyboardAvoidingView>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Last Name</Text>
+          <KeyboardAvoidingView>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your Last Name"
+              placeholderTextColor={theme.colors.grays[400]}
+              value={lastName}
+              onChangeText={setLastName}
+            />
+          </KeyboardAvoidingView>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Password *</Text>
           <KeyboardAvoidingView>
             <TextInput
               style={styles.input}
@@ -72,7 +119,7 @@ export const RegisterForm: FC = () => {
           </KeyboardAvoidingView>
         </View>
         <View style={styles.field}>
-          <Text style={styles.label}>Confirm Password</Text>
+          <Text style={styles.label}>Confirm Password *</Text>
           <KeyboardAvoidingView>
             <TextInput
               style={styles.input}
@@ -136,7 +183,7 @@ const styles = StyleSheet.create({
     width: 275,
   },
   field: {
-    marginVertical: 16,
+    marginVertical: 10,
   },
   label: {
     fontSize: 12,
