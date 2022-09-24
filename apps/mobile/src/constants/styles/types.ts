@@ -26,5 +26,11 @@ export interface ITheme {
         text: string;
       };
     };
+    white: string;
+    black: string;
+    card: {
+      background: string;
+      shadow: string;
+    }
   };
 }

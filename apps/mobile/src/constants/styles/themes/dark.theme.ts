@@ -27,6 +27,12 @@ export const darkTheme: ITheme = {
       inactive: '#F6F6F6',
       line: '#0f0f22',
       active: '#4e0eff',
-    }
+    },
+    white: '#FFF',
+    black: '#000',
+    card: {
+      background: '#0f0f22',
+      shadow: '#000',
+    },
   },
 };

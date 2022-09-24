@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Image, ImageStyle, StyleSheet, View, ViewStyle } from 'react-native';
-import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { theme } from '../../../constants';
 
 export interface ProfilePictureProps {
@@ -15,6 +15,7 @@ export const ProfilePicture = ({ picture, size = 40 }) => {
       style={StyleSheet.compose<ViewStyle>(styles.container, {
         width: size,
         height: size,
+        borderRadius: size / 2,
       })}
     >
       {picture ? (
@@ -36,7 +37,6 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     borderColor: theme.colors.inputBorder,
-    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
