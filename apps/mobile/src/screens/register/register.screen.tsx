@@ -1,24 +1,11 @@
 import React, { FC } from 'react';
-import { StyleSheet } from 'react-native';
-import { theme } from '../../constants';
 import { RegisterForm } from '../../components/auth/register/form';
-import { DismissKeyboardView } from '../../components/hoc/dismiss-keyboard-view';
+import { Layout } from '../../components/ui/layout';
 
 export const RegisterScreen: FC = () => {
   return (
-    <DismissKeyboardView style={styles.container}>
+    <Layout>
       <RegisterForm />
-    </DismissKeyboardView>
+    </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.background,
-  },
-});

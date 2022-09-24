@@ -8,7 +8,11 @@ const Stack = createNativeStackNavigator();
 export const MainStack: FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={CHAT_STACK} component={ChatStack} />
+      <Stack.Screen
+        name={CHAT_STACK}
+        component={ChatStack}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

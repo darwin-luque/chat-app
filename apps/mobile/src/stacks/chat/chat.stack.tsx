@@ -7,7 +7,10 @@ const Stack = createNativeStackNavigator();
 
 export const ChatStack: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      defaultScreenOptions={CHATS_SCREEN}
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name={CHATS_SCREEN} component={ChatsScreen} />
     </Stack.Navigator>
   );
