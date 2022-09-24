@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { REGISTER_SCREEN, theme } from '../../../../constants';
-import TerminalIcon from '../../../../assets/icons/terminal.icon';
+import TerminalIcon from '../../../../assets/icons/jsx/terminal.icon';
 import { loginAction } from '../../../../store/modules';
 import { useAppDispatch } from '../../../../hooks/redux.hook';
 
