@@ -4,6 +4,7 @@ export interface ITheme {
     text: string;
     inputBorder: string;
     link: string;
+    success: string;
     tab: {
       background: string;
       inactive: string;

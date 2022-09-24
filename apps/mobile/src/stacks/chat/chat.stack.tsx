@@ -32,5 +32,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text,
-  }
+    fontSize: 20,
+  },
 });

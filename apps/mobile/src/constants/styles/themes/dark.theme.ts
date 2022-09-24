@@ -6,6 +6,7 @@ export const darkTheme: ITheme = {
     text: '#F6F6F6',
     link: '#4e0eff',
     inputBorder: '#F6F6F6',
+    success: '#4BCA81',
     grays: {
       100: '#F6F6F6',
       200: '#EAEAEA',
