@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 import { REGISTER_SCREEN, theme } from '../../../../constants';
 import TerminalIcon from '../../../../assets/icons/terminal.icon';
+import { loginAction } from '../../../../store/modules';
+import { useAppDispatch } from '../../../../hooks/redux.hook';
 
 export const LoginForm: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigator = useNavigation();
+  const dispatch = useAppDispatch();
 
   const onRegister = () => {
     navigator.navigate(REGISTER_SCREEN);
@@ -22,7 +25,7 @@ export const LoginForm: FC = () => {
 
   const onLogin = () => {
     // TODO: Implement redux
-    console.log({ username, password });
+    dispatch(loginAction({ username, password }));
     setUsername('');
     setPassword('');
   };

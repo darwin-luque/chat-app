@@ -66,3 +66,39 @@ export const registerAction = Object.assign(
     }),
   }
 );
+
+export const loginAction = Object.assign(
+  (data: IUserInput): Action => async (dispatch) => {
+    dispatch(loginAction.start());
+    try {
+      const session = await AuthService.login(data);
+      await AsyncStorage.setItem(StorageKeys.Session, JSON.stringify(session));
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'You have successfully logged in',
+      });
+      dispatch(loginAction.success(session));
+    } catch (err) {
+      logger(err);
+      const message = (err as AxiosError).message;
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: message,
+      });
+      dispatch(loginAction.fail(message));
+    }
+  },
+  {
+    start: (): AuthAction => ({ type: ActionTypes.LOGIN_START }),
+    success: (session: Session): AuthAction => ({
+      type: ActionTypes.LOGIN_SUCCESS,
+      session,
+    }),
+    fail: (error: string): AuthAction => ({
+      type: ActionTypes.LOGIN_FAIL,
+      error,
+    }),
+  }
+);

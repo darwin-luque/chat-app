@@ -9,4 +9,11 @@ export class AuthService {
 
     return res.data;
   }
+
+  static async login(data: IUserInput): Promise<Session> {
+    const endpoint = 'http://localhost:3001/api/auth/sign-in';
+    const res: AxiosResponse<Session> = await axios.post(endpoint, data);
+
+    return res.data;
+  }
 }
