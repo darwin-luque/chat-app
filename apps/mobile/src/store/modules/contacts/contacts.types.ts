@@ -14,4 +14,5 @@ export interface ContactsAction {
   contacts?: IUser[];
   next?: IPage | null;
   error?: string;
+  restart?: boolean;
 }

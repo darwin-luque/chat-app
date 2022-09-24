@@ -12,7 +12,10 @@ import { logger } from '../../../utils';
 type Action = ThunkAction<void, RootState, unknown, ContactsAction>;
 
 export const listContactsAction = Object.assign(
-  (page: IPage): Action => async (dispatch, getState) => {
+  (page: IPage, filter = '', restart = false): Action => async (
+    dispatch,
+    getState
+  ) => {
     const token = getState().auth.session?.accessToken.jwtToken;
 
     dispatch(listContactsAction.start());
@@ -21,9 +24,9 @@ export const listContactsAction = Object.assign(
         throw new AxiosError('Authenticate first');
       }
 
-      const data = await ContactsService.list(token, page);
+      const data = await ContactsService.list(token, page, filter);
 
-      dispatch(listContactsAction.success(data.items, data.next));
+      dispatch(listContactsAction.success(data.items, data.next, restart));
     } catch (err) {
       logger(err);
       const message = (err as AxiosError).message;
@@ -37,10 +40,15 @@ export const listContactsAction = Object.assign(
   },
   {
     start: (): ContactsAction => ({ type: ActionTypes.LIST_CONTACTS_START }),
-    success: (contacts: IUser[], next: IPage | null): ContactsAction => ({
+    success: (
+      contacts: IUser[],
+      next: IPage | null,
+      restart: boolean
+    ): ContactsAction => ({
       type: ActionTypes.LIST_CONTACTS_SUCCESS,
       contacts,
       next,
+      restart,
     }),
     fail: (error: string): ContactsAction => ({
       type: ActionTypes.LIST_CONTACTS_FAIL,

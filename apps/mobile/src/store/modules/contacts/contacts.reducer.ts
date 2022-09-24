@@ -24,10 +24,9 @@ export const contactsReducer: Reducer<ContactsState, ContactsAction> = (
       return {
         ...state,
         loading: false,
-        contacts: appendArrayWithNewOnly(
-          state.contacts ?? [],
-          action.contacts ?? []
-        ),
+        contacts: action.restart
+          ? action.contacts ?? []
+          : appendArrayWithNewOnly(state.contacts ?? [], action.contacts ?? []),
         next: action.next ?? null,
       };
     case ActionTypes.LIST_CONTACTS_FAIL:
