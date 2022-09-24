@@ -1,15 +1,14 @@
 import React, { FC, useMemo } from 'react';
 import { IUser } from '@chat-app/utils';
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { theme } from '../../../../../constants';
+import { ProfilePicture } from '../../../../ui/profile-picture';
 
 export interface ContactElementProps {
   contact: IUser;
@@ -34,13 +33,7 @@ export const ContactElement: FC<ContactElementProps> = ({
       )}
       onPress={onSelect}
     >
-      <View style={styles.imageContainer}>
-        {contact.picture ? (
-          <Image source={{ uri: contact.picture }} style={styles.image} />
-        ) : (
-          <Icon name="user" color={theme.colors.text} size={32} />
-        )}
-      </View>
+      <ProfilePicture picture={contact.picture} />
       <View style={styles.textContainer}>
         <Text style={styles.username}>{contact.username}</Text>
         <Text style={styles.name}>{name}</Text>
@@ -62,17 +55,6 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10,
   },
-  imageContainer: {
-    width: 40,
-    height: 40,
-    borderWidth: 1,
-    borderColor: theme.colors.inputBorder,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  image: {},
   textContainer: {
     paddingVertical: 5,
     paddingHorizontal: 10,
