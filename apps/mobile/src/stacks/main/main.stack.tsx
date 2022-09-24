@@ -32,7 +32,7 @@ export const MainStack: FC = () => {
         component={ChatStack}
         options={{
           tabBarIcon({ color }) {
-            return <Icon color={color} size={26} name="message1" />;
+            return <Icon color={color} size={28} name="message1" />;
           },
           tabBarLabel() {
             return null;
