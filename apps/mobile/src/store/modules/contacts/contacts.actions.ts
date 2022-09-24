@@ -1,20 +1,26 @@
 import { ThunkAction } from '@reduxjs/toolkit';
+import Toast from 'react-native-toast-message';
 import { IUser } from '@chat-app/utils';
+import { AxiosError } from 'axios';
 import { ActionTypes } from '../../../constants';
 import { IPage } from '../../../types/api';
 import { RootState } from '../../index';
 import { ContactsAction } from './contacts.types';
-import Toast from 'react-native-toast-message';
-import { AxiosError } from 'axios';
 import { ContactsService } from '../../../services/contacts.service';
 
 type Action = ThunkAction<void, RootState, unknown, ContactsAction>;
 
 export const listContactsAction = Object.assign(
-  (page: IPage): Action => async (dispatch) => {
+  (page: IPage): Action => async (dispatch, getState) => {
+    const token = getState().auth.session?.accessToken.jwtToken;
+
     dispatch(listContactsAction.start());
     try {
-      const data = await ContactsService.list(page);
+      if (!token) {
+        throw new AxiosError('Authenticate first');
+      }
+
+      const data = await ContactsService.list(token, page);
 
       dispatch(listContactsAction.success(data.items, data.next));
     } catch (err) {

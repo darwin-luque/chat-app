@@ -1,14 +1,20 @@
 import { IUser } from '@chat-app/utils';
-import { PaginationOutputDto } from '@chat-app/nest-utils';
+import { IPaginationOutput } from '@chat-app/utils';
 import axios, { AxiosResponse } from 'axios';
 import { IPage } from '../types/api';
 
 export class ContactsService {
-  static async list(page: IPage): Promise<PaginationOutputDto<IUser>> {
+  static async list(
+    token: string,
+    page: IPage
+  ): Promise<IPaginationOutput<IUser>> {
     const endpoint = 'http://localhost:3001/api/users';
     const query = `?offset=${page.offset}&limit=${page.limit}`;
-    const res: AxiosResponse<PaginationOutputDto<IUser>> = await axios.get(
-      endpoint + query
+    const res: AxiosResponse<IPaginationOutput<IUser>> = await axios.get(
+      endpoint + query,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
 
     return res.data;

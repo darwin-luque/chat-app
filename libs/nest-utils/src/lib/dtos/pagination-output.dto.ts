@@ -1,3 +1,4 @@
+import { IPaginationOutput } from '@chat-app/utils';
 import { ApiProperty } from '@nestjs/swagger';
 
 interface IPage {
@@ -5,7 +6,7 @@ interface IPage {
   limit: number;
 }
 
-export class PaginationOutputDto<T> {
+export class PaginationOutputDto<T> implements IPaginationOutput<T> {
   items: T[];
   @ApiProperty({ type: Number, description: 'Total number of items' })
   total: number;

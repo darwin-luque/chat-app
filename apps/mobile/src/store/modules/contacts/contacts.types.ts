@@ -3,7 +3,7 @@ import { ActionTypes } from '../../../constants';
 import { IPage } from '../../../types/api';
 
 export interface ContactsState {
-  contacts: IUser[];
+  contacts: IUser[] | null;
   next: IPage | null;
   loading: boolean;
   error: string | null;

@@ -9,3 +9,17 @@ export interface ApiRequest extends Request {
 }
 
 export interface ApiNextFunction extends NextFunction {}
+
+export interface IPage {
+  offset: number;
+  limit: number;
+}
+
+export interface IPaginationOutput<T> {
+  items: T[];
+  total: number;
+  offset: number;
+  limit: number;
+  next: IPage | null;
+  prev: IPage | null;
+}
