@@ -102,3 +102,7 @@ export const loginAction = Object.assign(
     }),
   }
 );
+
+export const logoutAction = () => ({
+  type: ActionTypes.LOGOUT,
+});
