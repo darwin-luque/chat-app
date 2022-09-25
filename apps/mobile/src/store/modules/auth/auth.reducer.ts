@@ -13,12 +13,14 @@ export const authReducer: Reducer<AuthState, AuthAction> = (
   action
 ) => {
   switch (action.type) {
+    case ActionTypes.UPDATE_PROFILE_START:
     case ActionTypes.REGISTER_START:
     case ActionTypes.LOGIN_START:
       return {
         ...state,
         loading: true,
       };
+    case ActionTypes.UPDATE_PROFILE_SUCCESS:
     case ActionTypes.REGISTER_SUCCESS:
     case ActionTypes.CHECK_SESSION:
     case ActionTypes.LOGIN_SUCCESS:
@@ -27,6 +29,7 @@ export const authReducer: Reducer<AuthState, AuthAction> = (
         loading: false,
         session: action.session ?? null,
       };
+    case ActionTypes.UPDATE_PROFILE_FAIL:
     case ActionTypes.REGISTER_FAIL:
     case ActionTypes.LOGIN_FAIL:
       return {

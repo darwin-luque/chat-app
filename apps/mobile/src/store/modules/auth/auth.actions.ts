@@ -106,3 +106,54 @@ export const loginAction = Object.assign(
 export const logoutAction = () => ({
   type: ActionTypes.LOGOUT,
 });
+
+export const updateProfileAction = Object.assign(
+  (data: Partial<Omit<IUserInput, 'username'>>): Action => async (
+    dispatch,
+    getState
+  ) => {
+    dispatch(updateProfileAction.start());
+    try {
+      const session = getState().auth.session;
+      if (!session) {
+        throw new AxiosError('No session');
+      }
+      const newAttr = await AuthService.updateProfile(
+        session.accessToken.jwtToken,
+        data
+      );
+      console.log(newAttr);
+      const newSession: Session = { ...session, attributes: newAttr };
+      await AsyncStorage.setItem(
+        StorageKeys.Session,
+        JSON.stringify(newSession)
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'You have successfully updated your profile',
+      });
+      dispatch(updateProfileAction.success(newSession));
+    } catch (err) {
+      logger(err);
+      const message = (err as AxiosError).message;
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: message,
+      });
+      dispatch(updateProfileAction.fail(message));
+    }
+  },
+  {
+    start: (): AuthAction => ({ type: ActionTypes.UPDATE_PROFILE_START }),
+    success: (session: Session): AuthAction => ({
+      type: ActionTypes.UPDATE_PROFILE_SUCCESS,
+      session,
+    }),
+    fail: (error: string): AuthAction => ({
+      type: ActionTypes.UPDATE_PROFILE_FAIL,
+      error,
+    }),
+  }
+);

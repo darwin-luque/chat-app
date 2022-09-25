@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
 import { theme } from '../../../../constants';
+import { updateProfileAction } from '../../../../store/modules';
 
 export const UpdateProfileForm: FC = () => {
   const profile = useAppSelector((state) => state.auth.session?.attributes);
@@ -28,6 +29,13 @@ export const UpdateProfileForm: FC = () => {
         text2: 'Passwords do not match',
       });
     }
+    dispatch(
+      updateProfileAction({
+        firstName: firstName ? firstName : undefined,
+        lastName: lastName ? lastName : undefined,
+        password: password ? password : undefined,
+      })
+    );
     setPassword('');
     setFirstName('');
     setLastName('');
