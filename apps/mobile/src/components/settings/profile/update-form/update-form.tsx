@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 import {
   KeyboardAvoidingView,
@@ -15,11 +15,18 @@ import { updateProfileAction } from '../../../../store/modules';
 export const UpdateProfileForm: FC = () => {
   const profile = useAppSelector((state) => state.auth.session?.attributes);
 
-  const [firstName, setFirstName] = useState(profile?.firstName ?? '');
-  const [lastName, setLastName] = useState(profile?.lastName ?? '');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (profile) {
+      setFirstName(profile.firstName ?? '');
+      setLastName(profile.lastName ?? '');
+    }
+  }, [profile]);
 
   const onUpdate = () => {
     if (password && password !== confirmPassword) {
@@ -36,10 +43,6 @@ export const UpdateProfileForm: FC = () => {
         password: password ? password : undefined,
       })
     );
-    setPassword('');
-    setFirstName('');
-    setLastName('');
-    setConfirmPassword('');
   };
 
   return (
