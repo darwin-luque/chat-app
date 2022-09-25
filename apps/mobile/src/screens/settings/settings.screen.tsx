@@ -5,11 +5,15 @@ import { ProfileLogout } from '../../components/settings/profile/logout';
 import { Layout } from '../../components/ui/layout';
 import { useAppDispatch } from '../../hooks/redux.hook';
 import { logoutAction } from '../../store/modules';
+import { useNavigation } from '@react-navigation/native';
+import { UPDATE_PROFILE_SCREEN } from '../../constants';
 
 export const SettingsScreen: FC = () => {
   const dispatch = useAppDispatch();
+  const navigator = useNavigation();
+
   const onEdit = () => {
-    console.log('edit');
+    navigator.navigate(UPDATE_PROFILE_SCREEN);
   };
 
   const onLogout = () => {
