@@ -1,9 +1,11 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ITokenPayload } from '@chat-app/utils';
 import { TokenPayload } from '../../infrastructure/decorators/token-payload.decorator';
-import { CreateMessageDto } from './dtos/create-message.dto';
+import { ListMessagesForConversationQuery } from './queries/list-messages-for-conversation';
 import { CreateMessageCommand } from './commands/create-message';
+import { CreateMessageDto } from './dtos/create-message.dto';
+import { ListMessagesDto } from './dtos/list-messages.dto';
 
 @Controller()
 export class MessagesController {
@@ -20,6 +22,16 @@ export class MessagesController {
   ) {
     return this.commandBus.execute(
       new CreateMessageCommand(body, conversationId, payload.sub)
+    );
+  }
+
+  @Get(':conversationId/messages')
+  list(
+    @Param('conversationId') conversationId: string,
+    @Query() query: ListMessagesDto
+  ) {
+    return this.queryBus.execute(
+      new ListMessagesForConversationQuery(conversationId, query)
     );
   }
 }
