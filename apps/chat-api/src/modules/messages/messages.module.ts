@@ -1,10 +1,14 @@
-import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CqrsModule } from '@nestjs/cqrs';
-import { CommandHandlers } from './commands/handlers';
+import { Module } from '@nestjs/common';
+import { Conversation } from '../../infrastructure/entities/conversation.entity';
+import { Message } from '../../infrastructure/entities/message.entity';
 import { MessagesController } from './messages.controller';
+import { CommandHandlers } from './commands/handlers';
 
 @Module({
-  controllers: [MessagesController, CqrsModule],
+  imports: [CqrsModule, TypeOrmModule.forFeature([Message, Conversation])],
+  controllers: [MessagesController],
   providers: [...CommandHandlers],
 })
 export class MessagesModule {}

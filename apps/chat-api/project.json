@@ -11,20 +11,13 @@
         "compiler": "tsc",
         "outputPath": "dist/apps/chat-api",
         "main": "apps/chat-api/src/main.ts",
-        "tsConfig": "apps/chat-api/tsconfig.app.json",
-        "assets": ["apps/chat-api/src/assets"]
+        "tsConfig": "apps/chat-api/tsconfig.app.json"
       },
       "configurations": {
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/chat-api/src/environments/environment.ts",
-              "with": "apps/chat-api/src/environments/environment.prod.ts"
-            }
-          ]
+          "inspect": false
         }
       }
     },
