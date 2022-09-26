@@ -11,3 +11,20 @@ export function generatePassword(length = 8, charset = CHARSET): string {
   }
   return result;
 }
+
+export function areEqual(
+  array1: Array<string | number | boolean>,
+  array2: Array<string | number | boolean>
+): boolean {
+  if (array1.length === array2.length) {
+    return array1.every((element) => {
+      if (array2.includes(element)) {
+        return true;
+      }
+
+      return false;
+    });
+  }
+
+  return false;
+}
