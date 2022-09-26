@@ -2,13 +2,15 @@ import { IUser } from '@chat-app/utils';
 import { IPaginationOutput, IPage } from '@chat-app/utils';
 import axios, { AxiosResponse } from 'axios';
 
+const AUTH_API_URL = 'http://localhost:3001/api';
+
 export class ContactsService {
   static async list(
     token: string,
     page: IPage,
     filter: string
   ): Promise<IPaginationOutput<IUser>> {
-    const endpoint = 'http://localhost:3001/api/users';
+    const endpoint = `${AUTH_API_URL}/users`;
     const query = `?offset=${page.offset}&limit=${page.limit}${
       filter ? `&q=${filter}` : ''
     }`;

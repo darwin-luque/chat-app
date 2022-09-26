@@ -2,16 +2,18 @@ import axios, { AxiosResponse } from 'axios';
 import { IUserWithoutPassword, Session } from '@chat-app/utils';
 import { IUserInput } from '../types';
 
+const AUTH_API_URL = 'http://localhost:3001/api';
+
 export class AuthService {
   static async register(data: IUserInput): Promise<Session> {
-    const endpoint = 'http://localhost:3001/api/auth/sign-up';
+    const endpoint = `${AUTH_API_URL}/auth/sign-up`;
     const res: AxiosResponse<Session> = await axios.post(endpoint, data);
 
     return res.data;
   }
 
   static async login(data: IUserInput): Promise<Session> {
-    const endpoint = 'http://localhost:3001/api/auth/sign-in';
+    const endpoint = `${AUTH_API_URL}/auth/sign-in`;
     const res: AxiosResponse<Session> = await axios.post(endpoint, data);
 
     return res.data;
@@ -21,7 +23,7 @@ export class AuthService {
     token: string,
     data: Partial<Omit<IUserInput, 'username'>>
   ): Promise<IUserWithoutPassword> {
-    const endpoint = 'http://localhost:3001/api/users';
+    const endpoint = `${AUTH_API_URL}/users`;
     const res: AxiosResponse<IUserWithoutPassword> = await axios.patch(
       endpoint,
       data,
