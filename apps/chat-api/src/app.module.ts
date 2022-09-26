@@ -14,7 +14,6 @@ import { JwtAuthGuard } from './infrastructure/guards/auth.guard';
     JwtModule.register(jwtconfig),
     ConversationsModule,
   ],
-  controllers: [],
   providers: [JwtStrategy, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}
