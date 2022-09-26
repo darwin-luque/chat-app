@@ -9,4 +9,6 @@ export class Conversation extends Base {
 
   @OneToMany(() => Message, (message) => message.conversation)
   messages: Message[];
+
+  lastMessage?: Message;
 }
