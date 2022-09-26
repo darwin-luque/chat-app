@@ -122,7 +122,6 @@ export const updateProfileAction = Object.assign(
         session.accessToken.jwtToken,
         data
       );
-      console.log(newAttr);
       const newSession: Session = { ...session, attributes: newAttr };
       await AsyncStorage.setItem(
         StorageKeys.Session,

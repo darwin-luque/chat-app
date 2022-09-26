@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "auth-api": "apps/auth-api",
+    "chat-api": "apps/chat-api",
     "mobile": "apps/mobile",
     "mobile-e2e": "apps/mobile-e2e",
     "nest-utils": "libs/nest-utils",
