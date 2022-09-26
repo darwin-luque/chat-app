@@ -1,9 +1,10 @@
 import { Column, Entity, OneToMany } from 'typeorm';
+import { IConversation } from '@chat-app/utils';
 import { Base } from '@chat-app/nest-utils';
 import { Message } from './message.entity';
 
 @Entity({ name: 'conversation' })
-export class Conversation extends Base {
+export class Conversation extends Base implements IConversation {
   @Column({ name: 'members', array: true, type: 'uuid' })
   members: string[];
 
