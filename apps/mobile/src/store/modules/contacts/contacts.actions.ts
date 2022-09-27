@@ -55,3 +55,49 @@ export const listContactsAction = Object.assign(
     }),
   }
 );
+
+export const getContactAction = Object.assign(
+  (id: string): Action => async (dispatch, getState) => {
+    const token = getState().auth.session?.accessToken.jwtToken;
+    const contacts = getState().contacts.contacts;
+
+    dispatch(getContactAction.start());
+    try {
+      const localContact = contacts?.find((contact) => contact.id === id);
+
+      if (localContact) {
+        dispatch(getContactAction.success(localContact, false));
+        return;
+      }
+
+      if (!token) {
+        throw new AxiosError('Authenticate first');
+      }
+
+      const contact = await ContactsService.get(token, id);
+
+      dispatch(getContactAction.success(contact, true));
+    } catch (err) {
+      logger(err);
+      const message = (err as AxiosError).message;
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: message,
+      });
+      dispatch(getContactAction.fail(message));
+    }
+  },
+  {
+    start: (): ContactsAction => ({ type: ActionTypes.GET_CONTACT_START }),
+    success: (contact: IUser, shouldAppend: boolean): ContactsAction => ({
+      type: ActionTypes.GET_CONTACT_SUCCESS,
+      shouldAppend,
+      contact,
+    }),
+    fail: (error: string): ContactsAction => ({
+      type: ActionTypes.GET_CONTACT_FAIL,
+      error,
+    }),
+  }
+);

@@ -13,9 +13,19 @@ export class ContactsService {
     const query = `?offset=${page.offset}&limit=${page.limit}${
       filter ? `&q=${filter}` : ''
     }`;
-    const res: AxiosResponse<IPaginationOutput<
-      IUser
-    >> = await axios.get(endpoint + query, {
+    const res: AxiosResponse<IPaginationOutput<IUser>> = await axios.get(
+      endpoint + query,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    return res.data;
+  }
+
+  static async get(token: string, id: string) {
+    const endpoint = `${AUTH_API_URL}/users/${id}`;
+    const res: AxiosResponse<IUser> = await axios.get(endpoint, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

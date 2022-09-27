@@ -5,6 +5,7 @@ import { appendArrayWithNewOnly } from '../../../utils';
 
 const initalState: ContactsState = {
   contacts: null,
+  currentContact: null,
   next: firstPage,
   loading: false,
   error: null,
@@ -30,6 +31,27 @@ export const contactsReducer: Reducer<ContactsState, ContactsAction> = (
         next: action.next ?? null,
       };
     case ActionTypes.LIST_CONTACTS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error ?? null,
+      };
+    case ActionTypes.GET_CONTACT_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionTypes.GET_CONTACT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        contacts:
+          action.shouldAppend && action.contact
+            ? appendArrayWithNewOnly(state.contacts ?? [], [action.contact])
+            : state.contacts,
+        currentContact: action.contact ?? null,
+      };
+    case ActionTypes.GET_CONTACT_FAIL:
       return {
         ...state,
         loading: false,
