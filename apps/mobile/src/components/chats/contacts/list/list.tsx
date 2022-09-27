@@ -1,15 +1,20 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { IPage, IUser } from '@chat-app/types';
 import { FlatList, StyleSheet, Dimensions } from 'react-native';
+import { IPage, IUser } from '@chat-app/types';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
-import { listContactsAction } from '../../../../store/modules';
-import { ContactElement } from './element';
 import { ContactsListFilter } from '../../../ui/filter';
-import { firstPage } from '../../../../constants';
+import { CHAT_SCREEN, firstPage } from '../../../../constants';
+import { ContactElement } from './element';
+import {
+  findOrCreateConversationAction,
+  listContactsAction,
+} from '../../../../store/modules';
+import { useNavigation } from '@react-navigation/native';
 
 export const ContactsList: FC = () => {
   const [filter, setFilter] = useState('');
   const { contacts, loading, next } = useAppSelector((state) => state.contacts);
+  const navigator = useNavigation();
 
   const dispatch = useAppDispatch();
 
@@ -41,7 +46,8 @@ export const ContactsList: FC = () => {
   }, [loadContacts, next]);
 
   const onSelectContact = (contact: IUser) => {
-    console.log({ contact });
+    dispatch(findOrCreateConversationAction(contact.id));
+    navigator.navigate(CHAT_SCREEN);
   };
 
   return (

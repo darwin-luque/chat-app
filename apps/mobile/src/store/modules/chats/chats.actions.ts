@@ -7,6 +7,8 @@ import { ChatService } from '../../../services/chat.service';
 import { ActionTypes } from '../../../constants';
 import { ChatsActions } from './chats.types';
 import { RootState } from '../../index';
+import { logger } from '../../../utils';
+import { getContactAction } from '../contacts';
 
 type Action = ThunkAction<void, RootState, unknown, ChatsActions>;
 
@@ -37,6 +39,8 @@ export const findOrCreateConversationAction = Object.assign(
         jwtToken,
         to
       );
+
+      dispatch(getContactAction(to));
 
       dispatch(findOrCreateConversationAction.success(foundConversation, true));
     } catch (error) {
@@ -80,6 +84,7 @@ export const listConversationsAction = Object.assign(
 
       dispatch(listConversationsAction.success(data.items, data.next, restart));
     } catch (error) {
+      logger(error);
       const message = (error as AxiosError).message;
       Toast.show({ type: 'error', text1: 'Error', text2: message });
       dispatch(listConversationsAction.fail(message));

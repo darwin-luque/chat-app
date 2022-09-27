@@ -47,7 +47,7 @@ export const contactsReducer: Reducer<ContactsState, ContactsAction> = (
         loading: false,
         contacts:
           action.shouldAppend && action.contact
-            ? appendArrayWithNewOnly(state.contacts ?? [], [action.contact])
+            ? [...(state.contacts ?? []), action.contact]
             : state.contacts,
         currentContact: action.contact ?? null,
       };
