@@ -1,5 +1,3 @@
-import { Document } from 'mongoose';
-
 export enum AssetTypes {
   Image = 'image',
   Video = 'video',
@@ -25,7 +23,9 @@ export interface IAsset {
   ownerId: string;
 }
 
-export type AssetDocument = IAsset & Document;
+export type AssetDocument = IAsset & {
+  _id: string;
+};
 
 export interface Disposition {
   default: number;
