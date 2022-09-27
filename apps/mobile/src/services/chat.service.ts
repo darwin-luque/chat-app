@@ -1,5 +1,5 @@
+import { IConversation, IPage, IPaginationOutput } from '@chat-app/utils';
 import axios, { AxiosResponse } from 'axios';
-import { IConversation, IPaginationOutput } from '@chat-app/utils';
 
 const CHAT_API_URL = 'http://localhost:3002/api';
 
@@ -9,7 +9,7 @@ export class ChatService {
     to: string
   ): Promise<IConversation> {
     const res: AxiosResponse<IConversation> = await axios.post(
-      `${CHAT_API_URL}/conversation`,
+      `${CHAT_API_URL}/conversations`,
       { to },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -17,11 +17,14 @@ export class ChatService {
   }
 
   static async listConversations(
-    token: string
+    token: string,
+    page: IPage
   ): Promise<IPaginationOutput<IConversation>> {
+    const endpoint = `${CHAT_API_URL}/conversations`;
+    const query = `?offset=${page.offset}&limit=${page.limit}`;
     const res: AxiosResponse<IPaginationOutput<
       IConversation
-    >> = await axios.get(`${CHAT_API_URL}/conversation`, {
+    >> = await axios.get(endpoint + query, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -34,7 +37,7 @@ export class ChatService {
     body: string
   ): Promise<IConversation> {
     const res: AxiosResponse<IConversation> = await axios.post(
-      `${CHAT_API_URL}/conversation/${conversationId}/message`,
+      `${CHAT_API_URL}/conversations/${conversationId}/messages`,
       { body },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -47,7 +50,7 @@ export class ChatService {
   ): Promise<IPaginationOutput<IConversation>> {
     const res: AxiosResponse<IPaginationOutput<
       IConversation
-    >> = await axios.get(`${CHAT_API_URL}/conversation/${conversationId}`, {
+    >> = await axios.get(`${CHAT_API_URL}/conversations/${conversationId}/messages`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

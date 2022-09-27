@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@chat-app/nest-utils": ["libs/nest-utils/src/index.ts"],
+      "@chat-app/types": ["libs/types/src/index.ts"],
       "@chat-app/utils": ["libs/utils/src/index.ts"]
     }
   },

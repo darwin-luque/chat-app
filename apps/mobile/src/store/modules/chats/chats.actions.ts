@@ -1,11 +1,11 @@
+import { areEqual, IConversation, IPage } from '@chat-app/utils';
 import { ThunkAction } from '@reduxjs/toolkit';
 import Toast from 'react-native-toast-message';
-import { areEqual } from '@chat-app/utils';
 import { AxiosError } from 'axios';
-import { ActionTypes } from '../../../constants';
 import { ChatService } from '../../../services/chat.service';
+import { ActionTypes } from '../../../constants';
+import { ChatsActions } from './chats.types';
 import { RootState } from '../../index';
-import { ChatsActions, ConversationOnState } from './chats.types';
 
 type Action = ThunkAction<void, RootState, unknown, ChatsActions>;
 
@@ -21,7 +21,7 @@ export const findOrCreateConversationAction = Object.assign(
 
       const { jwtToken, payload } = session.accessToken;
 
-      const localConversation = getState().chats.conversations.find(
+      const localConversation = getState().chats.conversations?.find(
         (conversation) => areEqual(conversation.members, [to, payload.sub])
       );
 
@@ -37,19 +37,10 @@ export const findOrCreateConversationAction = Object.assign(
         to
       );
 
-      dispatch(
-        findOrCreateConversationAction.success(
-          { ...foundConversation, messages: [] },
-          true
-        )
-      );
+      dispatch(findOrCreateConversationAction.success(foundConversation, true));
     } catch (error) {
       const message = (error as AxiosError).message;
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: message,
-      });
+      Toast.show({ type: 'error', text1: 'Error', text2: message });
       dispatch(findOrCreateConversationAction.fail(error.message));
     }
   },
@@ -58,7 +49,7 @@ export const findOrCreateConversationAction = Object.assign(
       type: ActionTypes.FIND_OR_CREATE_CONVERSATION_START,
     }),
     success: (
-      conversation: ConversationOnState,
+      conversation: IConversation,
       shouldAppend: boolean
     ): ChatsActions => ({
       type: ActionTypes.FIND_OR_CREATE_CONVERSATION_SUCCESS,
@@ -67,6 +58,48 @@ export const findOrCreateConversationAction = Object.assign(
     }),
     fail: (error: string): ChatsActions => ({
       type: ActionTypes.FIND_OR_CREATE_CONVERSATION_FAIL,
+      error,
+    }),
+  }
+);
+
+export const listConversationsAction = Object.assign(
+  (page: IPage, restart = false): Action => async (dispatch, getState) => {
+    dispatch(listConversationsAction.start());
+    try {
+      const session = getState().auth.session;
+
+      if (!session) {
+        throw new AxiosError('Unauthenticated user');
+      }
+
+      const { jwtToken } = session.accessToken;
+
+      const data = await ChatService.listConversations(jwtToken, page);
+
+      dispatch(listConversationsAction.success(data.items, data.next, restart));
+    } catch (error) {
+      const message = (error as AxiosError).message;
+      Toast.show({ type: 'error', text1: 'Error', text2: message });
+      dispatch(listConversationsAction.fail(message));
+    }
+  },
+  {
+    start: (): ChatsActions => ({
+      type: ActionTypes.LIST_CONVERSATIONS_START,
+    }),
+    success: (
+      conversations: IConversation[],
+      next: IPage | null,
+      restart: boolean
+    ): ChatsActions => ({
+      type: ActionTypes.LIST_CONVERSATIONS_SUCCESS,
+      conversations,
+      restart,
+      next,
+    }),
+    fail: (error: string): ChatsActions => ({
+      type: ActionTypes.LIST_CONVERSATIONS_FAIL,
       error,
     }),
   }

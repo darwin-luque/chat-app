@@ -6,7 +6,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Router } from './stacks/router';
 import { store } from './store';
 
-export const App = () => {
+export function App() {
   return (
     <Provider store={store}>
       <PaperProvider>
@@ -16,6 +16,6 @@ export const App = () => {
       </PaperProvider>
     </Provider>
   );
-};
+}
 
 export default App;

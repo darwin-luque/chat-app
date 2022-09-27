@@ -1,5 +1,4 @@
-import { IUser } from '@chat-app/utils';
-import { IPaginationOutput, IPage } from '@chat-app/utils';
+import { IUser, IPaginationOutput, IPage } from '@chat-app/utils';
 import axios, { AxiosResponse } from 'axios';
 
 const AUTH_API_URL = 'http://localhost:3001/api';
@@ -14,12 +13,11 @@ export class ContactsService {
     const query = `?offset=${page.offset}&limit=${page.limit}${
       filter ? `&q=${filter}` : ''
     }`;
-    const res: AxiosResponse<IPaginationOutput<IUser>> = await axios.get(
-      endpoint + query,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const res: AxiosResponse<IPaginationOutput<
+      IUser
+    >> = await axios.get(endpoint + query, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return res.data;
   }
