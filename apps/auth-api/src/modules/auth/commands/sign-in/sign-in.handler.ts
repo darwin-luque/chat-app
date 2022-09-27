@@ -1,10 +1,7 @@
-import {
-  Session,
-  ITokenPayload,
-  mapUserToTokenUserMetadata,
-} from '@chat-app/utils';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { mapUserToTokenUserMetadata } from '@chat-app/utils';
+import { Session, ITokenPayload } from '@chat-app/types'
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';

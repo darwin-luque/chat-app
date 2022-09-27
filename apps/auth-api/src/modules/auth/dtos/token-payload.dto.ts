@@ -1,4 +1,4 @@
-import { ITokenPayload } from '@chat-app/utils';
+import { ITokenPayload } from '@chat-app/types';
 import { Expose } from 'class-transformer';
 
 export class TokenPayloadDto implements ITokenPayload {

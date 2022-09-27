@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IUserWithoutPassword, Session } from '@chat-app/utils';
+import { IUserWithoutPassword, Session } from '@chat-app/types';
 import { IUserInput } from '../types';
 
 const AUTH_API_URL = 'http://localhost:3001/api';

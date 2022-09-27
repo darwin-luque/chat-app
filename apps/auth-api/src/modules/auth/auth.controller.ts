@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { Serialize } from '@chat-app/nest-utils';
-import { ITokenPayload, Session } from '@chat-app/utils';
+import { ITokenPayload, Session } from '@chat-app/types';
 import { CommandBus } from '@nestjs/cqrs';
 import { Public } from '../../infrastructure/decorators/public.decorator';
 import { RefreshCommand } from './commands/refresh';

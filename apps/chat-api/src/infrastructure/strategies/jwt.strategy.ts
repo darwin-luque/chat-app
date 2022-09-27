@@ -1,6 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { ITokenPayload } from '@chat-app/utils';
+import { ITokenPayload } from '@chat-app/types';
 import { Injectable } from '@nestjs/common';
 import { jwtconfig } from '../../config/jwt/jwt.config';
 

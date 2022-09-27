@@ -1,16 +1,13 @@
-import {
-  Session,
-  ITokenPayload,
-  mapUserToTokenUserMetadata,
-} from '@chat-app/utils';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { mapUserToTokenUserMetadata } from '@chat-app/utils';
+import { Session, ITokenPayload } from '@chat-app/types'
+import { BadRequestException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../../../infrastructure/entities/user.entity';
 import { SignUpCommand } from './sign-up.command';
-import { BadRequestException } from '@nestjs/common';
 
 @CommandHandler(SignUpCommand)
 export class SignUpHandler implements ICommandHandler<SignUpCommand> {

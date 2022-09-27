@@ -1,6 +1,6 @@
 import { Base } from '@chat-app/nest-utils';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { IMessage } from '@chat-app/utils';
+import { IMessage } from '@chat-app/types';
 import { Conversation } from './conversation.entity';
 
 @Entity({ name: 'message' })

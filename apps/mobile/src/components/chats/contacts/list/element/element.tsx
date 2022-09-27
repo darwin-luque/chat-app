@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { IUser } from '@chat-app/utils';
+import { IUser } from '@chat-app/types';
 import {
   StyleSheet,
   Text,

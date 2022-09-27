@@ -1,5 +1,5 @@
 import { ThunkAction } from '@reduxjs/toolkit';
-import { Session } from '@chat-app/utils';
+import { Session } from '@chat-app/types';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AxiosError } from 'axios';
 import { RootState } from '../../index';

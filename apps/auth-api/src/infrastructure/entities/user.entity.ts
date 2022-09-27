@@ -1,5 +1,5 @@
 import { Base } from '@chat-app/nest-utils';
-import { IUser } from '@chat-app/utils';
+import { IUser } from '@chat-app/types';
 import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'user' })

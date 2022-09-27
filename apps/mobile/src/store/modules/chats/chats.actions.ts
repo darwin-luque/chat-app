@@ -1,6 +1,7 @@
-import { areEqual, IConversation, IPage } from '@chat-app/utils';
+import { IConversation, IPage } from '@chat-app/types';
 import { ThunkAction } from '@reduxjs/toolkit';
 import Toast from 'react-native-toast-message';
+import { areEqual } from '@chat-app/utils';
 import { AxiosError } from 'axios';
 import { ChatService } from '../../../services/chat.service';
 import { ActionTypes } from '../../../constants';

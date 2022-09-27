@@ -1,4 +1,4 @@
-import { IUser, IPage } from '@chat-app/utils';
+import { IUser, IPage } from '@chat-app/types';
 import { ActionTypes } from '../../../constants';
 
 export interface ContactsState {

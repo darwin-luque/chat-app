@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { Session } from '@chat-app/utils';
+import { Session } from '@chat-app/types';
 import { AccessTokenDto } from './access-token.dto';
 import { UserDto } from '../../users/dtos/user.dto';
 

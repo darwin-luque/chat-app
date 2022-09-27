@@ -1,4 +1,4 @@
-import { IConversation, IPage, IPaginationOutput } from '@chat-app/utils';
+import { IConversation, IPage, IPaginationOutput } from '@chat-app/types';
 import axios, { AxiosResponse } from 'axios';
 
 const CHAT_API_URL = 'http://localhost:3002/api';

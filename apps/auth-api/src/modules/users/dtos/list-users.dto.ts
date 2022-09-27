@@ -1,5 +1,5 @@
 import { PaginationInputDto } from '@chat-app/nest-utils';
-import { ESortOrder } from '@chat-app/utils';
+import { ESortOrder } from '@chat-app/types';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class ListUsersDto extends PaginationInputDto {

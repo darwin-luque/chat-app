@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { IPage, IUser } from '@chat-app/utils';
+import { IPage, IUser } from '@chat-app/types';
 import { FlatList, StyleSheet, Dimensions } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux.hook';
 import { listContactsAction } from '../../../../store/modules';

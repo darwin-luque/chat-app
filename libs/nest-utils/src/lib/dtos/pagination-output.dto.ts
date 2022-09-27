@@ -1,4 +1,4 @@
-import { IPaginationOutput } from '@chat-app/utils';
+import { IPaginationOutput } from '@chat-app/types';
 import { ApiProperty } from '@nestjs/swagger';
 
 interface IPage {

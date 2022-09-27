@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { IConversation } from '@chat-app/utils';
+import { IConversation } from '@chat-app/types';
 import { Base } from '@chat-app/nest-utils';
 import { Message } from './message.entity';
 

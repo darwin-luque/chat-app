@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ITokenPayload } from '@chat-app/utils';
+import { ITokenPayload } from '@chat-app/types';
 import { TokenPayload } from '../../infrastructure/decorators/token-payload.decorator';
 import { ListMessagesForConversationQuery } from './queries/list-messages-for-conversation';
 import { CreateMessageCommand } from './commands/create-message';

@@ -1,4 +1,4 @@
-import { IUser, IPaginationOutput, IPage } from '@chat-app/utils';
+import { IUser, IPaginationOutput, IPage } from '@chat-app/types';
 import axios, { AxiosResponse } from 'axios';
 
 const AUTH_API_URL = 'http://localhost:3001/api';

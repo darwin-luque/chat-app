@@ -1,4 +1,4 @@
-import { Session } from '@chat-app/utils';
+import { Session } from '@chat-app/types';
 import { ActionTypes } from '../../../constants';
 
 export interface AuthState {

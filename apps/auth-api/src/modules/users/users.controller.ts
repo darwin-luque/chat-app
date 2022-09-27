@@ -6,7 +6,7 @@ import {
 } from '@chat-app/nest-utils';
 import { Body, Controller, Delete, Get, Patch, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ITokenPayload } from '@chat-app/utils';
+import { ITokenPayload } from '@chat-app/types';
 import { TokenPayload } from '../../infrastructure/decorators/token-payload.decorator';
 import { ListUsersDto } from './dtos/list-users.dto';
 import { ListUsersQuery } from './queries/list-users';
