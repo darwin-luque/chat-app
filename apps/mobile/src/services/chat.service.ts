@@ -42,7 +42,7 @@ export class ChatService {
     body: string
   ): Promise<IMessage> {
     const res: AxiosResponse<IMessage> = await axios.post(
-      `${CHAT_API_URL}/${conversationId}/messages`,
+      `${CHAT_API_URL}/conversations/${conversationId}/messages`,
       { body },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -54,7 +54,7 @@ export class ChatService {
     conversationId: string,
     page: IPage
   ): Promise<IPaginationOutput<IMessage>> {
-    const endpoint = `${CHAT_API_URL}/${conversationId}/messages`;
+    const endpoint = `${CHAT_API_URL}/conversations/${conversationId}/messages`;
     const query = `?offset=${page.offset}&limit=${page.limit}`;
     const res: AxiosResponse<IPaginationOutput<IMessage>> = await axios.get(
       endpoint + query,

@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     left: 0,
     right: 0,
-    borderRadius: 30,
+    paddingHorizontal: 10,
     borderWidth: 1,
+    borderRadius: 30,
     borderColor: theme.colors.chat.input.border,
   },
   primary: {
