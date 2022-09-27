@@ -17,7 +17,7 @@ export class MessagesController {
     private readonly queryBus: QueryBus
   ) {}
 
-  @Post(':conversationId/messages')
+  @Post('conversations/:conversationId/messages')
   @Serialize(MessageDto)
   create(
     @Param('conversationId') conversationId: string,
@@ -29,7 +29,7 @@ export class MessagesController {
     );
   }
 
-  @Get(':conversationId/messages')
+  @Get('conversations/:conversationId/messages')
   @Serialize(MessageDto)
   async list(
     @Param('conversationId') conversationId: string,

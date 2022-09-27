@@ -5,10 +5,11 @@ import { Conversation } from '../../infrastructure/entities/conversation.entity'
 import { Message } from '../../infrastructure/entities/message.entity';
 import { MessagesController } from './messages.controller';
 import { CommandHandlers } from './commands/handlers';
+import { QueryHandlers } from './queries/handlers';
 
 @Module({
   imports: [CqrsModule, TypeOrmModule.forFeature([Message, Conversation])],
   controllers: [MessagesController],
-  providers: [...CommandHandlers],
+  providers: [...CommandHandlers, ...QueryHandlers],
 })
 export class MessagesModule {}

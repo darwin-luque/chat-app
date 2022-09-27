@@ -1,11 +1,12 @@
 import { NotFoundException } from '@nestjs/common';
-import { ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Conversation } from '../../../../infrastructure/entities/conversation.entity';
 import { Message } from '../../../../infrastructure/entities/message.entity';
 import { CreateMessageCommand } from './create-message.command';
 
+@CommandHandler(CreateMessageCommand)
 export class CreateMessageHandler
   implements ICommandHandler<CreateMessageCommand> {
   constructor(
