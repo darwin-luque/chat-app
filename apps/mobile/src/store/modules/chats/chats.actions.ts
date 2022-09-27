@@ -12,6 +12,22 @@ import { getContactAction } from '../contacts';
 
 type Action = ThunkAction<void, RootState, unknown, ChatsActions>;
 
+export const selectConversationAction = (
+  conversationId: string,
+  contactId: string
+): Action => (dispatch, getState) => {
+  dispatch(getContactAction(contactId));
+  const conversation = getState().chats.conversations?.find(
+    (conversation) => conversation.id === conversationId
+  );
+  if (conversation) {
+    dispatch({ type: ActionTypes.SELECT_CONVERSATION, conversation });
+    return;
+  }
+
+  dispatch(findOrCreateConversationAction(contactId));
+};
+
 export const findOrCreateConversationAction = Object.assign(
   (to: string): Action => async (dispatch, getState) => {
     dispatch(findOrCreateConversationAction.start());
@@ -28,6 +44,7 @@ export const findOrCreateConversationAction = Object.assign(
         (conversation) => areEqual(conversation.members, [to, payload.sub])
       );
 
+      dispatch(getContactAction(to));
       if (localConversation) {
         dispatch(
           findOrCreateConversationAction.success(localConversation, false)
@@ -39,8 +56,6 @@ export const findOrCreateConversationAction = Object.assign(
         jwtToken,
         to
       );
-
-      dispatch(getContactAction(to));
 
       dispatch(findOrCreateConversationAction.success(foundConversation, true));
     } catch (error) {

@@ -64,6 +64,11 @@ export const chatsReducer: Reducer<ChatsState, ChatsActions> = (
         loading: false,
         error: action.error ?? null,
       };
+    case ActionTypes.SELECT_CONVERSATION:
+      return {
+        ...state,
+        currentConversation: action.conversation ?? null,
+      };
     default:
       return state;
   }
