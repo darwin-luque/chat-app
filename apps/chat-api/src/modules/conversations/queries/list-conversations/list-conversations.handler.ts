@@ -22,7 +22,6 @@ export class ListConversationsHandler
   ): Promise<[Conversation[], number]> {
     return this.conversationsRepository
       .createQueryBuilder('conversation')
-      .where('conversa')
       .where('conversation.members = :did', { did: query.id })
       .leftJoinAndMapOne(
         'conversation.lastMessage',
