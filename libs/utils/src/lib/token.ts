@@ -1,4 +1,4 @@
-import { ITokenUserMetadata, IUser } from './types';
+import { ITokenUserMetadata, IUser } from '@chat-app/types';
 
 export const mapUserToTokenUserMetadata = (
   user: IUser

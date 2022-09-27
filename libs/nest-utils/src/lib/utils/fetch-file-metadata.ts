@@ -1,5 +1,5 @@
+import { AssetTypes, FfmpegResult } from '@chat-app/types';
 import { exec } from 'child_process';
-import { AssetTypes, FfmpegResult } from './types';
 
 export const execFfmpeg = (href: string): Promise<FfmpegResult> =>
   new Promise((res, rej) => {
