@@ -1,11 +1,11 @@
-import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import React, { FC, useLayoutEffect } from 'react';
-import { Text } from 'react-native';
-import { Layout } from '../../components/ui/layout';
 import { LeftNavigator } from '../../components/ui/left-navigator';
 import { useAppSelector } from '../../hooks/redux.hook';
+import { Layout } from '../../components/ui/layout';
 import { CHATS_SCREEN } from '../../constants';
+import { Chat } from '../../components/chat';
 
 export const ChatScreen: FC = () => {
   const { currentContact } = useAppSelector((state) => state.contacts);
@@ -29,7 +29,7 @@ export const ChatScreen: FC = () => {
 
   return (
     <Layout>
-      <Text>Chat Screen</Text>
+      <Chat />
     </Layout>
   );
 };

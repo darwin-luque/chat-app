@@ -35,6 +35,13 @@ export interface ITheme {
     card: {
       background: string;
       shadow: string;
+    };
+    chat: {
+      input: {
+        background: string;
+        text: string;
+        border: string;
+      }
     }
   };
 }

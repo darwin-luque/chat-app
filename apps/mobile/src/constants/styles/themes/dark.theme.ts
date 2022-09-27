@@ -38,5 +38,12 @@ export const darkTheme: ITheme = {
       background: '#0f0f22',
       shadow: '#000',
     },
+    chat: {
+      input: {
+        background: '#0f0f22',
+        text: '#F6F6F6',
+        border: '#F6F6F6',
+      },
+    },
   },
 };
