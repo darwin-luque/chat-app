@@ -1,7 +1,4 @@
-import {
-  DEFAULT_LIMIT,
-  DEFAULT_OFFSET,
-} from '@chat-app/nest-utils';
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from '@chat-app/nest-utils';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
@@ -19,7 +16,6 @@ export class ListMessagesForConversationHandler
   execute(
     query: ListMessagesForConversationQuery
   ): Promise<[Message[], number]> {
-    console.log({ query });
     return this.messagesRepository.findAndCount({
       where: {
         conversation: { id: query.conversationId },

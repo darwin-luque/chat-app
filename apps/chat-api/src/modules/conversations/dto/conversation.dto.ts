@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { MessageDto } from '../../messages/dtos/message.dto';
 
 export class ConversationDto {
   @Expose()
@@ -8,7 +9,8 @@ export class ConversationDto {
   members: string[];
 
   @Expose()
-  lastMessage?: string;
+  @Type(() => MessageDto)
+  lastMessage?: MessageDto;
 
   @Expose()
   createdAt: Date;
