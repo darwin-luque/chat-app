@@ -2,9 +2,10 @@ import {
   GiftedChat,
   IMessage as GiftedChatMessage,
 } from 'react-native-gifted-chat';
+import { Socket, io } from 'socket.io-client';
 import { StyleSheet, View } from 'react-native';
 import { IMessage, IPage } from '@chat-app/types';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { ChatService } from '../../services/chat.service';
 import { useAppSelector } from '../../hooks/redux.hook';
 import { ChatInputToolbar } from './input-toolbar';
@@ -17,6 +18,7 @@ import { firstPage } from '../../constants';
 export const Chat: FC = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [page, setPage] = useState<IPage | null>(firstPage);
+  const socket = useRef<Socket>();
   const currentContact = useAppSelector(
     (state) => state.contacts.currentContact
   );
@@ -25,6 +27,20 @@ export const Chat: FC = () => {
   const conversation = useAppSelector(
     (state) => state.chats.currentConversation
   );
+
+  useEffect(() => {
+    if (attributes?.id) {
+      console.log('Creating socket');
+      socket.current = io('http://localhost:3002');
+
+      console.log('Emitting events');
+      socket.current.emit('add-user', attributes.id);
+    }
+
+    return () => {
+      socket.current?.disconnect();
+    };
+  }, [attributes?.id]);
 
   const loadMessages = useCallback(
     async (page: IPage = firstPage) => {

@@ -23,6 +23,7 @@
     "@react-navigation/material-bottom-tabs": "*",
     "react-native-vector-icons": "*",
     "@react-navigation/bottom-tabs": "*",
-    "react-native-gifted-chat": "*"
+    "react-native-gifted-chat": "*",
+    "socket.io-client": "*"
   }
 }

@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { ConversationsModule } from './modules/conversations/conversations.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { ChatsModule } from './modules/chats/chats.module';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 import { JwtAuthGuard } from './infrastructure/guards/auth.guard';
 import { ormconfig } from './config/typeorm/ormconfig';
@@ -15,6 +16,7 @@ import { jwtconfig } from './config/jwt/jwt.config';
     JwtModule.register(jwtconfig),
     ConversationsModule,
     MessagesModule,
+    ChatsModule,
   ],
   providers: [JwtStrategy, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
