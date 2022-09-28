@@ -56,7 +56,6 @@ export const Chat: FC = () => {
   useEffect(() => {
     if (attributes && currentContact) {
       onReceiveMessage((receivedMessage: IMessage) => {
-        console.log({ receivedMessage });
         setMessages((prevMessages) => {
           const newMessages = [receivedMessage, ...prevMessages];
           GiftedChat.append(

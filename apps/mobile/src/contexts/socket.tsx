@@ -22,9 +22,9 @@ export const SocketProvider = ({ children }) => {
   const socket = useRef<Socket | null>(null);
 
   const onInit = useCallback((userId: string) => {
-    socket.current = io('http://localhost:3002');
-
-    socket.current.emit('add-user', userId);
+    socket.current = io('http://localhost:3002', {
+      query: { userId },
+    });
   }, []);
 
   const onDisconnect = useCallback(() => {
