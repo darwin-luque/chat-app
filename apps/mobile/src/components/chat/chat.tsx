@@ -2,23 +2,23 @@ import {
   GiftedChat,
   IMessage as GiftedChatMessage,
 } from 'react-native-gifted-chat';
-import { Socket, io } from 'socket.io-client';
 import { StyleSheet, View } from 'react-native';
 import { IMessage, IPage } from '@chat-app/types';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useContext, useEffect, useState } from 'react';
+import { appendArrayWithNewOnly, logger } from '../../utils';
+import { mapMessage, mapMessages, mapUser } from './utils';
 import { ChatService } from '../../services/chat.service';
 import { useAppSelector } from '../../hooks/redux.hook';
+import { SocketContext } from '../../contexts/socket';
 import { ChatInputToolbar } from './input-toolbar';
 import { ChatSendButton } from './send-button';
-import { ChatInput } from './input';
-import { appendArrayWithNewOnly, logger } from '../../utils';
-import { mapMessages, mapUser } from './utils';
 import { firstPage } from '../../constants';
+import { ChatInput } from './input';
 
 export const Chat: FC = () => {
+  const { onSendMessage, onReceiveMessage } = useContext(SocketContext);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [page, setPage] = useState<IPage | null>(firstPage);
-  const socket = useRef<Socket>();
   const currentContact = useAppSelector(
     (state) => state.contacts.currentContact
   );
@@ -27,20 +27,6 @@ export const Chat: FC = () => {
   const conversation = useAppSelector(
     (state) => state.chats.currentConversation
   );
-
-  useEffect(() => {
-    if (attributes?.id) {
-      console.log('Creating socket');
-      socket.current = io('http://localhost:3002');
-
-      console.log('Emitting events');
-      socket.current.emit('add-user', attributes.id);
-    }
-
-    return () => {
-      socket.current?.disconnect();
-    };
-  }, [attributes?.id]);
 
   const loadMessages = useCallback(
     async (page: IPage = firstPage) => {
@@ -67,22 +53,29 @@ export const Chat: FC = () => {
     loadMessages();
   }, [loadMessages]);
 
+  useEffect(() => {
+    if (attributes && currentContact) {
+      onReceiveMessage((receivedMessage: IMessage) => {
+        console.log({ receivedMessage });
+        setMessages((prevMessages) => {
+          const newMessages = [receivedMessage, ...prevMessages];
+          GiftedChat.append(
+            mapMessages(prevMessages, attributes, currentContact),
+            [mapMessage(receivedMessage, attributes, currentContact)]
+          );
+          return newMessages;
+        });
+      });
+    }
+  }, [attributes, currentContact, onReceiveMessage]);
+
   const onSend = async (messagesToSend: GiftedChatMessage[]) => {
     if (conversation && accessToken?.jwtToken && attributes && currentContact) {
       try {
-        const sentMessage = await ChatService.sendMessage(
-          accessToken.jwtToken,
-          conversation.id,
-          messagesToSend[0].text
-        );
-
-        setMessages((prevMessages) => {
-          const newMessages = [sentMessage, ...prevMessages];
-          GiftedChat.append(
-            mapMessages(prevMessages, attributes, currentContact),
-            messagesToSend
-          );
-          return newMessages;
+        onSendMessage({
+          body: messagesToSend[0].text,
+          userId: attributes.id,
+          conversationId: conversation.id,
         });
       } catch (error) {
         logger(error);

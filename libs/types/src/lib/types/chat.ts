@@ -9,9 +9,15 @@ export interface IConversation {
 
 export interface IMessage {
   id: string;
-  conversation: IConversation
+  conversation: IConversation;
   user: string;
   body: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ISendMessage {
+  body: string;
+  userId: string;
+  conversationId: string;
 }
