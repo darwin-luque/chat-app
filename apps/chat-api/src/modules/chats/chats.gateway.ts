@@ -41,27 +41,29 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   }
 
-  handleConnection() {
-    this.logger.verbose('Client connected');
+  handleConnection(client: Socket) {
+    const id = client.handshake.query.userId;
+    if (id && typeof id === 'string') {
+      this.logger.debug('add-user', { user: id, client: client.id });
+      this.users.set(id, client);
+      this.server.emit('users', this.users);
+      this.logger.verbose('Client connected');
+    }
   }
 
-  @SubscribeMessage('add-user')
-  addUser(client: Socket, id: string) {
-    this.logger.debug('add-user', id);
-    this.users.set(id, client);
-    this.server.emit('users', this.users);
-  }
-
-  // @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  @UsePipes(new ValidationPipe({ whitelist: true }))
   @SubscribeMessage('send-message')
   async onChat(@MessageBody() message: ReceiveMessageDto): Promise<void> {
-    console.log({ message });
-    const savedMessage = await this.commandBus.execute<
+    const [savedMessage, users] = await this.commandBus.execute<
       AppendMessageCommand,
-      Message
+      [Message, string[]]
     >(new AppendMessageCommand(message));
 
-    console.log({ savedMessage });
-    this.server.emit('receive-message', savedMessage);
+    users.forEach((user) => {
+      const userSocket = this.users.get(user);
+      if (userSocket) {
+        this.server.to(userSocket.id).emit('receive-message', savedMessage);
+      }
+    });
   }
 }

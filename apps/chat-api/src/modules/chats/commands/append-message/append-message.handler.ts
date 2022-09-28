@@ -16,7 +16,7 @@ export class AppendMessageHandler
     public readonly messagesRepository: Repository<Message>
   ) {}
 
-  async execute(command: AppendMessageCommand): Promise<Message> {
+  async execute(command: AppendMessageCommand): Promise<[Message, string[]]> {
     const conversation = await this.conversationsRepository.findOneBy({
       id: command.data.conversationId,
     });
@@ -25,12 +25,14 @@ export class AppendMessageHandler
       throw new NotFoundException('Conversation not found');
     }
 
-    return this.messagesRepository.save(
+    const message = await this.messagesRepository.save(
       this.messagesRepository.create({
         conversation,
         body: command.data.body,
         user: command.data.userId,
       })
     );
+
+    return [message, conversation.members];
   }
 }
