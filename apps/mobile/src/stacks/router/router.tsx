@@ -11,16 +11,18 @@ import { SocketContext } from '../../contexts/socket';
 const Stack = createNativeStackNavigator();
 
 export const Router: FC = () => {
-  const { onInit, onDisconnect, socket } = useContext(SocketContext);
-  const session = useAppSelector((state) => state.auth.session);
+  const { onInit, onDisconnect, listenToMessages } = useContext(SocketContext);
+  const { jwtToken, payload } =
+    useAppSelector((state) => state.auth.session?.accessToken) ?? {};
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!socket && session?.attributes.id) {
-      onInit(session.attributes.id);
+    if (payload?.sub && jwtToken) {
+      onInit(payload.sub);
+      listenToMessages(jwtToken);
     }
     return () => onDisconnect();
-  }, [onDisconnect, onInit, session?.attributes.id, socket]);
+  }, [jwtToken, listenToMessages, onDisconnect, onInit, payload?.sub]);
 
   useEffect(() => {
     dispatch(checkForSessionAction());
@@ -29,7 +31,7 @@ export const Router: FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {session ? (
+        {jwtToken ? (
           <Stack.Screen name={MAIN_STACK} component={MainStack} />
         ) : (
           <Stack.Screen name={AUTH_STACK} component={AuthStack} />

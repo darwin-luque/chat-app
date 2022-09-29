@@ -5,9 +5,7 @@ import {
 import { StyleSheet, View } from 'react-native';
 import { IMessage, IPage } from '@chat-app/types';
 import { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { appendArrayWithNewOnly, logger } from '../../utils';
-import { mapMessage, mapMessages, mapUser } from './utils';
-import { ChatService } from '../../services/chat.service';
+import { mapMessages, mapUser } from './utils';
 import { useAppSelector } from '../../hooks/redux.hook';
 import { SocketContext } from '../../contexts/socket';
 import { ChatInputToolbar } from './input-toolbar';
@@ -17,7 +15,8 @@ import { ChatInput } from './input';
 import { useFocusEffect } from '@react-navigation/native';
 
 export const Chat: FC = () => {
-  const { onSendMessage, onReceiveMessage } = useContext(SocketContext);
+  const { onLoadMessages, getMessagesForConversation, getSocket } =
+    useContext(SocketContext);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [page, setPage] = useState<IPage | null>(firstPage);
   const currentContact = useAppSelector(
@@ -31,62 +30,32 @@ export const Chat: FC = () => {
 
   const loadMessages = useCallback(
     (page: IPage = firstPage, restart = true) => {
-      if (conversation && accessToken?.jwtToken) {
-        ChatService.listMessagesForConversation(
-          accessToken.jwtToken,
-          conversation.id,
-          page
-        )
-          .then((fetchedMessages) => {
-            setMessages((prevMessages) =>
-              restart
-                ? fetchedMessages.items
-                : appendArrayWithNewOnly(prevMessages, fetchedMessages.items)
-            );
-            setPage(fetchedMessages.next);
-          })
-          .catch((error) => {
-            logger(error);
-          });
+      if (conversation?.id && accessToken?.jwtToken) {
+        onLoadMessages(conversation.id, accessToken.jwtToken, page, restart);
       }
     },
-    [accessToken?.jwtToken, conversation]
+    [accessToken?.jwtToken, conversation?.id, onLoadMessages]
   );
   useFocusEffect(loadMessages);
 
   useEffect(() => {
-    return () => {
-      setMessages([]);
-      setPage(firstPage);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (attributes && currentContact) {
-      onReceiveMessage((receivedMessage: IMessage) => {
-        setMessages((prevMessages) => {
-          const newMessages = [receivedMessage, ...prevMessages];
-          GiftedChat.append(
-            mapMessages(prevMessages, attributes, currentContact),
-            [mapMessage(receivedMessage, attributes, currentContact)]
-          );
-          return newMessages;
-        });
-      });
+    if (conversation?.id) {
+      const { items, page: newPage } = getMessagesForConversation(
+        conversation.id
+      );
+      setMessages(items);
+      setPage(newPage);
     }
-  }, [attributes, currentContact, onReceiveMessage]);
+  }, [conversation?.id, getMessagesForConversation]);
 
   const onSend = async (messagesToSend: GiftedChatMessage[]) => {
     if (conversation && accessToken?.jwtToken && attributes && currentContact) {
-      try {
-        onSendMessage({
-          body: messagesToSend[0].text,
-          userId: attributes.id,
-          conversationId: conversation.id,
-        });
-      } catch (error) {
-        logger(error);
-      }
+      const socket = getSocket();
+      socket?.emit('send-message', {
+        body: messagesToSend[0].text,
+        userId: attributes.id,
+        conversationId: conversation.id,
+      });
     }
   };
 

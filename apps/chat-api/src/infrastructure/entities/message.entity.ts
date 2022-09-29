@@ -11,6 +11,8 @@ export class Message extends Base implements IMessage {
   @Column({ name: 'user', type: 'uuid' })
   user: string;
 
-  @ManyToOne(() => Conversation, (conversation) => conversation.messages)
+  @ManyToOne(() => Conversation, (conversation) => conversation.messages, {
+    eager: true,
+  })
   conversation: Conversation;
 }
