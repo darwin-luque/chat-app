@@ -22,7 +22,7 @@ export class ListConversationsHandler
   ): Promise<[Conversation[], number]> {
     return this.conversationsRepository
       .createQueryBuilder('conversation')
-      .where('conversation.members = :did', { did: query.id })
+      .where('conversation.members @> :ids', { ids: [query.id] })
       .leftJoinAndMapOne(
         'conversation.lastMessage',
         'conversation.messages',
@@ -33,7 +33,7 @@ export class ListConversationsHandler
         'lastMessage',
         'messages.createdAt < lastMessage.createdAt'
       )
-      .where('lastMessage.id IS NULL')
+      .andWhere('lastMessage.id IS NULL')
       .orderBy(
         `messages.${query.data.field ?? 'createdAt'}`,
         query.data.order ?? DEFAULT_ORDER
