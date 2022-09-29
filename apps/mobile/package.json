@@ -24,6 +24,8 @@
     "react-native-vector-icons": "*",
     "@react-navigation/bottom-tabs": "*",
     "react-native-gifted-chat": "*",
-    "socket.io-client": "*"
+    "socket.io-client": "*",
+    "react-native-localize": "*",
+    "moment-timezone": "*"
   }
 }

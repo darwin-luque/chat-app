@@ -2,6 +2,8 @@ import {
   IMessage as GiftedChatMessage,
   User as GiftedChatUser,
 } from 'react-native-gifted-chat';
+import { getTimeZone } from 'react-native-localize';
+import moment from 'moment-timezone';
 import { IMessage, IUserWithoutPassword } from '@chat-app/types';
 
 export const mapUser = (user: IUserWithoutPassword): GiftedChatUser => {
@@ -17,10 +19,15 @@ export const mapMessage = (
   user: IUserWithoutPassword,
   contact: IUserWithoutPassword
 ): GiftedChatMessage => {
+  // Not yet working
+  const createdAt = moment(message.createdAt)
+    .tz(getTimeZone())
+    .toDate()
+    .getTime();
   return {
     _id: message.id,
     text: message.body,
-    createdAt: message.createdAt,
+    createdAt,
     pending: false,
     user: mapUser(message.user === user.id ? user : contact),
   };
