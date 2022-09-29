@@ -1,59 +1,39 @@
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CHAT_STACK, SETTINGS_STACK, theme } from '../../constants';
-import { SettingsStack } from '../settings';
-import { ChatStack } from '../chat';
+import { CHAT_SCREEN, TAB_STACK, theme } from '../../constants';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TabStack } from '../tab';
+import { ChatScreen } from '../../screens/chat';
 
-const styles = StyleSheet.create({
-  bar: {
-    backgroundColor: theme.colors.tab.background,
-    borderTopColor: theme.colors.tab.line,
-    borderTopWidth: 1,
-    height: 80,
-  },
-});
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export const MainStack: FC = () => {
   return (
-    <Tab.Navigator
-      initialRouteName={CHAT_STACK}
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: styles.bar,
-        tabBarActiveTintColor: theme.colors.tab.active,
-        tabBarInactiveTintColor: theme.colors.tab.inactive,
-      }}
+    <Stack.Navigator
+      initialRouteName={TAB_STACK}
+      screenOptions={{ headerShown: false }}
     >
-      <Tab.Screen
-        name={CHAT_STACK}
-        component={ChatStack}
+      <Stack.Screen name={TAB_STACK} component={TabStack} />
+      <Stack.Screen
+        name={CHAT_SCREEN}
+        component={ChatScreen}
         options={{
-          tabBarIcon({ color }) {
-            return <Icon color={color} size={28} name="message1" />;
-          },
-          tabBarLabel() {
-            return null;
-          },
-          tabBarAccessibilityLabel: 'Chat',
+          headerShown: true,
+          headerStyle: styles.header,
+          headerTitleStyle: styles.title,
+          title: 'Chat',
         }}
       />
-      <Tab.Screen
-        name={SETTINGS_STACK}
-        component={SettingsStack}
-        options={{
-          tabBarIcon({ color }) {
-            return <Icon color={color} size={28} name="setting" />;
-          },
-          tabBarLabel() {
-            return null;
-          },
-          tabBarAccessibilityLabel: 'Settings',
-        }}
-      />
-    </Tab.Navigator>
+    </Stack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: theme.colors.tab.background,
+  },
+  title: {
+    color: theme.colors.text,
+    fontSize: 20,
+  },
+});

@@ -43,7 +43,7 @@ export const ChatInputToolbar: FC<InputToolbarProps<GiftedChatMessage>> = (
     <View
       style={StyleSheet.compose<ViewStyle>(styles.container, {
         position,
-        bottom: position === 'absolute' ? -30 : -100,
+        bottom: position === 'absolute' ? -30 : -50,
       })}
     >
       <View style={styles.primary}>
