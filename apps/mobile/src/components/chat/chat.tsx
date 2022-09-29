@@ -14,6 +14,7 @@ import { ChatInputToolbar } from './input-toolbar';
 import { ChatSendButton } from './send-button';
 import { firstPage } from '../../constants';
 import { ChatInput } from './input';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const Chat: FC = () => {
   const { onSendMessage, onReceiveMessage } = useContext(SocketContext);
@@ -29,29 +30,36 @@ export const Chat: FC = () => {
   );
 
   const loadMessages = useCallback(
-    async (page: IPage = firstPage) => {
+    (page: IPage = firstPage, restart = true) => {
       if (conversation && accessToken?.jwtToken) {
-        try {
-          const fetchedMessages = await ChatService.listMessagesForConversation(
-            accessToken.jwtToken,
-            conversation.id,
-            page
-          );
-          setMessages((prevMessages) =>
-            appendArrayWithNewOnly(prevMessages, fetchedMessages.items)
-          );
-          setPage(fetchedMessages.next);
-        } catch (error) {
-          logger(error);
-        }
+        ChatService.listMessagesForConversation(
+          accessToken.jwtToken,
+          conversation.id,
+          page
+        )
+          .then((fetchedMessages) => {
+            setMessages((prevMessages) =>
+              restart
+                ? fetchedMessages.items
+                : appendArrayWithNewOnly(prevMessages, fetchedMessages.items)
+            );
+            setPage(fetchedMessages.next);
+          })
+          .catch((error) => {
+            logger(error);
+          });
       }
     },
     [accessToken?.jwtToken, conversation]
   );
+  useFocusEffect(loadMessages);
 
   useEffect(() => {
-    loadMessages();
-  }, [loadMessages]);
+    return () => {
+      setMessages([]);
+      setPage(firstPage);
+    };
+  }, []);
 
   useEffect(() => {
     if (attributes && currentContact) {
@@ -91,7 +99,7 @@ export const Chat: FC = () => {
         renderInputToolbar={(props) => <ChatInputToolbar {...props} />}
         renderComposer={(props) => <ChatInput {...props} />}
         onSend={onSend}
-        onLoadEarlier={() => page && loadMessages(page)}
+        onLoadEarlier={() => page && loadMessages(page, false)}
       />
     </View>
   ) : null;
