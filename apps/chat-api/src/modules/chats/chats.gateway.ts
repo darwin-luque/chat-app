@@ -31,8 +31,10 @@ export class ChatsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logger.verbose('Client disconnected');
     // A client has disconnected
     for (const [id, socket] of this.users.entries()) {
-      if (socket.id === client.id) key = id;
-      break;
+      if (socket.id === client.id) {
+        key = id;
+        break;
+      }
     }
 
     if (key) {

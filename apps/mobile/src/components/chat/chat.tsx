@@ -69,6 +69,7 @@ export const Chat: FC = () => {
         renderComposer={(props) => <ChatInput {...props} />}
         onSend={onSend}
         onLoadEarlier={() => page && loadMessages(page, false)}
+        infiniteScroll
       />
     </View>
   ) : null;
@@ -76,7 +77,7 @@ export const Chat: FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: '100%',
+    height: '100%',
   },
 });
